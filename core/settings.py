@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # third party
     "django_extensions",
     "handyhelpers",
-    "djangoaddicts.codegen",
+    # "djangoaddicts.codegen",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_filters",
