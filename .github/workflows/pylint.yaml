@@ -1,8 +1,0 @@
-on: [push]
-
-jobs:
-  pylint:
-    uses: davidslusser/actions/.github/workflows/pylint.yaml@main
-    with:
-      src: "."
-      dependancies: "pip install requirements.txt"
