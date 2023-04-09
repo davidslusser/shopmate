@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   black:
-    uses: davidslusser/actions/.github/workflows/bandit.yaml@main
+    uses: davidslusser/actions/.github/workflows/black.yaml@main
     with:
       src: "django_project"
       options: "-r"
