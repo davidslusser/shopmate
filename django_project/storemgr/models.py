@@ -36,21 +36,19 @@ class Product(HandyHelperBaseModel):
 class OrderStatus(HandyHelperBaseModel):
     name = models.CharField(max_length=16, unique=True)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self) -> str:
+    #     return self.name
 
 
 class Customer(HandyHelperBaseModel):
-    customer_id = models.CharField(
-        max_length=16, unique=True, blank=True, primary_key=True
-    )
+    customer_id = models.CharField(max_length=16, unique=True, blank=True, primary_key=True)
     first_name = models.CharField(max_length=16)
     last_name = models.CharField(max_length=16)
 
     class Meta:
         ordering = ("-created_at",)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.customer_id
 
     def save(self, *args, **kwargs):
@@ -63,9 +61,7 @@ class Customer(HandyHelperBaseModel):
 
 
 class Order(HandyHelperBaseModel):
-    order_id = models.CharField(
-        max_length=16, unique=True, blank=True, primary_key=True
-    )
+    order_id = models.CharField(max_length=16, unique=True, blank=True, primary_key=True)
     status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, blank=True)

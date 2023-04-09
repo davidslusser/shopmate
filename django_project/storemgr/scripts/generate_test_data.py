@@ -26,9 +26,7 @@ from storemgr.models import Customer, Product, ProductAttribute, Order, OrderSta
 
 def get_opts():
     """Return an argparse object."""
-    parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawTextHelpFormatter
-    )
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
         "--verbose",
         default=logging.INFO,
@@ -36,9 +34,7 @@ def get_opts():
         const=logging.DEBUG,
         help="enable debug logging",
     )
-    parser.add_argument(
-        "--version", action="version", version=__version__, help="show version and exit"
-    )
+    parser.add_argument("--version", action="version", version=__version__, help="show version and exit")
     parser.add_argument(
         "--clean",
         action="store_true",
@@ -60,9 +56,9 @@ def create_users_and_groups():
     for group_name, user_list in group_map.items():
         group = Group.objects.get_or_create(name=group_name)[0]
         for user_name in user_list:
-            user = User.objects.get_or_create(
-                username=user_name, defaults=dict(username=user_name, password="app123")
-            )[0]
+            user = User.objects.get_or_create(username=user_name, defaults=dict(username=user_name, password="app123"))[
+                0
+            ]
             user.groups.add(group)
             if group_name in ["admin"]:
                 user.is_superuser = True
@@ -194,9 +190,7 @@ def get_random_last_name():
 def create_customers(qty=1):
     """add some customer entries to the database"""
     for i in range(qty):
-        data = dict(
-            first_name=get_random_first_name(), last_name=get_random_last_name()
-        )
+        data = dict(first_name=get_random_first_name(), last_name=get_random_last_name())
         Customer.objects.get_or_create(**data, defaults=data)
 
 

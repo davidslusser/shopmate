@@ -12,9 +12,7 @@ router.register(r"customer", viewsets.CustomerViewSet, "customer")
 router.register(r"order", viewsets.OrderViewSet, "order")
 router.register(r"orderstatus", viewsets.OrderStatusViewSet, "orderstatus")
 router.register(r"product", viewsets.ProductViewSet, "product")
-router.register(
-    r"productattribute", viewsets.ProductAttributeViewSet, "productattribute"
-)
+router.register(r"productattribute", viewsets.ProductAttributeViewSet, "productattribute")
 
 
 urlpatterns = [

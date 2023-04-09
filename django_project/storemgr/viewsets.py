@@ -45,9 +45,7 @@ class CustomerViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(
-                "No orders available for this customer ", status.HTTP_400_BAD_REQUEST
-            )
+            return Response("No orders available for this customer ", status.HTTP_400_BAD_REQUEST)
 
 
 class OrderViewSet(viewsets.ReadOnlyModelViewSet):
@@ -69,9 +67,7 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(
-                "No productss available for this order ", status.HTTP_400_BAD_REQUEST
-            )
+            return Response("No productss available for this order ", status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
         queryset = self.model.objects.all().select_related(
@@ -108,9 +104,7 @@ class OrderStatusViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(
-                "No orders available for this orderstatus ", status.HTTP_400_BAD_REQUEST
-            )
+            return Response("No orders available for this orderstatus ", status.HTTP_400_BAD_REQUEST)
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
@@ -133,9 +127,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(
-                "No orders available for this product ", status.HTTP_400_BAD_REQUEST
-            )
+            return Response("No orders available for this product ", status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=["get"])
     def attributes(self, request, *args, **kwargs):

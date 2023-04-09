@@ -52,9 +52,7 @@ class CustomerTests(TestCase):
         """verify first_name (CharField) can be updated"""
         row = self.bake()
         original_value = row.first_name
-        updated_value = baker.prepare(
-            self.to_bake, _fill_optional=["first_name"]
-        ).first_name
+        updated_value = baker.prepare(self.to_bake, _fill_optional=["first_name"]).first_name
         setattr(row, "first_name", updated_value)
         row.save()
         self.assertEqual(getattr(row, "first_name"), updated_value)
@@ -64,9 +62,7 @@ class CustomerTests(TestCase):
         """verify last_name (CharField) can be updated"""
         row = self.bake()
         original_value = row.last_name
-        updated_value = baker.prepare(
-            self.to_bake, _fill_optional=["last_name"]
-        ).last_name
+        updated_value = baker.prepare(self.to_bake, _fill_optional=["last_name"]).last_name
         setattr(row, "last_name", updated_value)
         row.save()
         self.assertEqual(getattr(row, "last_name"), updated_value)
@@ -116,19 +112,11 @@ class OrderTests(TestCase):
         """verify customer (ForeignKey) can be updated"""
         row = self.bake()
         original_value = row.customer
-        baker.make(
-            self.model.customer.field.related_model._meta.label, _fill_optional=True
-        )
+        baker.make(self.model.customer.field.related_model._meta.label, _fill_optional=True)
         if original_value:
-            updated_value = random.choice(
-                self.model.customer.field.related_model.objects.exclude(
-                    pk=original_value.pk
-                )
-            )
+            updated_value = random.choice(self.model.customer.field.related_model.objects.exclude(pk=original_value.pk))
         else:
-            updated_value = random.choice(
-                self.model.customer.field.related_model.objects.all()
-            )
+            updated_value = random.choice(self.model.customer.field.related_model.objects.all())
         setattr(row, "customer", updated_value)
         row.save()
         self.assertEqual(getattr(row, "customer"), updated_value)
@@ -138,19 +126,11 @@ class OrderTests(TestCase):
         """verify status (ForeignKey) can be updated"""
         row = self.bake()
         original_value = row.status
-        baker.make(
-            self.model.status.field.related_model._meta.label, _fill_optional=True
-        )
+        baker.make(self.model.status.field.related_model._meta.label, _fill_optional=True)
         if original_value:
-            updated_value = random.choice(
-                self.model.status.field.related_model.objects.exclude(
-                    pk=original_value.pk
-                )
-            )
+            updated_value = random.choice(self.model.status.field.related_model.objects.exclude(pk=original_value.pk))
         else:
-            updated_value = random.choice(
-                self.model.status.field.related_model.objects.all()
-            )
+            updated_value = random.choice(self.model.status.field.related_model.objects.all())
         setattr(row, "status", updated_value)
         row.save()
         self.assertEqual(getattr(row, "status"), updated_value)
@@ -250,9 +230,7 @@ class ProductTests(TestCase):
         """verify description (CharField) can be updated"""
         row = self.bake()
         original_value = row.description
-        updated_value = baker.prepare(
-            self.to_bake, _fill_optional=["description"]
-        ).description
+        updated_value = baker.prepare(self.to_bake, _fill_optional=["description"]).description
         setattr(row, "description", updated_value)
         row.save()
         self.assertEqual(getattr(row, "description"), updated_value)

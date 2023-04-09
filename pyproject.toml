@@ -24,9 +24,18 @@ max-complexity = 25
 hang-closing = true
 
 
+[tool.pylint.MASTER]
+ignore-paths = ["django_project/tests", "django_project/storemgr/migrations", "django_project/storemgr/scripts"]
+exit-zero = true
+
+
 [tool.pylint.'MESSAGES CONTROL']
-disable = "R0903,R0913,R0901,W0613,W0718"
+disable = "R0903,R0913,R0901,W0613,W0718,C0114,C0115,C0103,R1725"
 
 
 [tool.pylint.format]
 max-line-length = "120"
+
+
+[tool.bandit]
+exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts"]

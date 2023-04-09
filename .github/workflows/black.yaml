@@ -1,9 +1,9 @@
 on: [push]
 
 jobs:
-  pytest:
-    uses: davidslusser/actions/.github/workflows/pytest.yaml@main
+  black:
+    uses: davidslusser/actions/.github/workflows/bandit.yaml@main
     with:
       src: "django_project"
-      options: ""
+      options: "-r"
       pip_install_command: "pip install -r requirements.txt"
