@@ -5,5 +5,5 @@ jobs:
     uses: davidslusser/actions/.github/workflows/black.yaml@main
     with:
       src: "django_project"
-      options: "-r"
+      options: ""
       pip_install_command: "pip install -r requirements.txt"
