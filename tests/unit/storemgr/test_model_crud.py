@@ -33,19 +33,19 @@ class CustomerTests(TestCase):
     def test_read(self):
         """verify object can be read"""
         row = self.bake()
-        entry = self.model.objects.get(id=row.id)
+        entry = self.model.objects.get(pk=row.pk)
         self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.id, entry.id)
+        self.assertEqual(row.pk, entry.pk)
 
     def test_delete(self):
         """verify object can be deleted"""
         row = self.bake()
         before_count = self.model.objects.count()
-        row_id = row.id
+        row_pk = row.pk
         row.delete()
         after_count = self.model.objects.count()
         with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(id=row_id)
+            self.model.objects.get(pk=row_pk)
         self.assertLess(after_count, before_count)
 
     def test_update_first_name(self):
@@ -97,19 +97,19 @@ class OrderTests(TestCase):
     def test_read(self):
         """verify object can be read"""
         row = self.bake()
-        entry = self.model.objects.get(id=row.id)
+        entry = self.model.objects.get(pk=row.pk)
         self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.id, entry.id)
+        self.assertEqual(row.pk, entry.pk)
 
     def test_delete(self):
         """verify object can be deleted"""
         row = self.bake()
         before_count = self.model.objects.count()
-        row_id = row.id
+        row_pk = row.pk
         row.delete()
         after_count = self.model.objects.count()
         with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(id=row_id)
+            self.model.objects.get(pk=row_pk)
         self.assertLess(after_count, before_count)
 
     def test_update_customer(self):
@@ -122,7 +122,7 @@ class OrderTests(TestCase):
         if original_value:
             updated_value = random.choice(
                 self.model.customer.field.related_model.objects.exclude(
-                    id=original_value.id
+                    pk=original_value.pk
                 )
             )
         else:
@@ -134,28 +134,6 @@ class OrderTests(TestCase):
         self.assertEqual(getattr(row, "customer"), updated_value)
         self.assertNotEqual(getattr(row, "customer"), original_value)
 
-    def test_update_product(self):
-        """verify product (ForeignKey) can be updated"""
-        row = self.bake()
-        original_value = row.product
-        baker.make(
-            self.model.product.field.related_model._meta.label, _fill_optional=True
-        )
-        if original_value:
-            updated_value = random.choice(
-                self.model.product.field.related_model.objects.exclude(
-                    id=original_value.id
-                )
-            )
-        else:
-            updated_value = random.choice(
-                self.model.product.field.related_model.objects.all()
-            )
-        setattr(row, "product", updated_value)
-        row.save()
-        self.assertEqual(getattr(row, "product"), updated_value)
-        self.assertNotEqual(getattr(row, "product"), original_value)
-
     def test_update_status(self):
         """verify status (ForeignKey) can be updated"""
         row = self.bake()
@@ -166,7 +144,7 @@ class OrderTests(TestCase):
         if original_value:
             updated_value = random.choice(
                 self.model.status.field.related_model.objects.exclude(
-                    id=original_value.id
+                    pk=original_value.pk
                 )
             )
         else:
@@ -203,19 +181,19 @@ class OrderStatusTests(TestCase):
     def test_read(self):
         """verify object can be read"""
         row = self.bake()
-        entry = self.model.objects.get(id=row.id)
+        entry = self.model.objects.get(pk=row.pk)
         self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.id, entry.id)
+        self.assertEqual(row.pk, entry.pk)
 
     def test_delete(self):
         """verify object can be deleted"""
         row = self.bake()
         before_count = self.model.objects.count()
-        row_id = row.id
+        row_pk = row.pk
         row.delete()
         after_count = self.model.objects.count()
         with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(id=row_id)
+            self.model.objects.get(pk=row_pk)
         self.assertLess(after_count, before_count)
 
     def test_update_name(self):
@@ -253,19 +231,19 @@ class ProductTests(TestCase):
     def test_read(self):
         """verify object can be read"""
         row = self.bake()
-        entry = self.model.objects.get(id=row.id)
+        entry = self.model.objects.get(pk=row.pk)
         self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.id, entry.id)
+        self.assertEqual(row.pk, entry.pk)
 
     def test_delete(self):
         """verify object can be deleted"""
         row = self.bake()
         before_count = self.model.objects.count()
-        row_id = row.id
+        row_pk = row.pk
         row.delete()
         after_count = self.model.objects.count()
         with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(id=row_id)
+            self.model.objects.get(pk=row_pk)
         self.assertLess(after_count, before_count)
 
     def test_update_description(self):
@@ -279,6 +257,16 @@ class ProductTests(TestCase):
         row.save()
         self.assertEqual(getattr(row, "description"), updated_value)
         self.assertNotEqual(getattr(row, "description"), original_value)
+
+    def test_update_sku(self):
+        """verify sku (CharField) can be updated"""
+        row = self.bake()
+        original_value = row.sku
+        updated_value = baker.prepare(self.to_bake, _fill_optional=["sku"]).sku
+        setattr(row, "sku", updated_value)
+        row.save()
+        self.assertEqual(getattr(row, "sku"), updated_value)
+        self.assertNotEqual(getattr(row, "sku"), original_value)
 
 
 class ProductAttributeTests(TestCase):
@@ -305,19 +293,19 @@ class ProductAttributeTests(TestCase):
     def test_read(self):
         """verify object can be read"""
         row = self.bake()
-        entry = self.model.objects.get(id=row.id)
+        entry = self.model.objects.get(pk=row.pk)
         self.assertTrue(isinstance(entry, self.model))
-        self.assertEqual(row.id, entry.id)
+        self.assertEqual(row.pk, entry.pk)
 
     def test_delete(self):
         """verify object can be deleted"""
         row = self.bake()
         before_count = self.model.objects.count()
-        row_id = row.id
+        row_pk = row.pk
         row.delete()
         after_count = self.model.objects.count()
         with self.assertRaises(self.model.DoesNotExist):
-            self.model.objects.get(id=row_id)
+            self.model.objects.get(pk=row_pk)
         self.assertLess(after_count, before_count)
 
     def test_update_key(self):

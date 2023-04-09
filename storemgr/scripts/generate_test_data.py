@@ -7,8 +7,6 @@ import datetime
 import django
 import environ
 import random
-import string
-from django.utils import timezone
 
 
 __version__ = "0.0.1"
@@ -118,7 +116,7 @@ def create_products(qty=1):
         style = ProductAttribute.objects.get_random_row(key="style")
         brand = ProductAttribute.objects.get_random_row(key="brand")
         description = f"{item}; {color.value}; size {size.value}"
-        product= Product.objects.create(description=description)
+        product = Product.objects.create(description=description)
         product.attributes.add(color, size, style, brand)
         product.save()
 

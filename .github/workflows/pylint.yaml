@@ -4,5 +4,5 @@ jobs:
   pylint:
     uses: davidslusser/actions/.github/workflows/pylint.yaml@main
     with:
-      src: "src"
-      dependancies: "pip install .[dev]"
+      src: "."
+      dependancies: "pip install requirements.txt"
