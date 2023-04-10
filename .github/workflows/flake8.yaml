@@ -1,8 +1,8 @@
 on: [push]
 
 jobs:
-  flak8:
-    uses: davidslusser/actions/.github/workflows/flak8.yaml@main
+  flake8:
+    uses: davidslusser/actions/.github/workflows/flake8.yaml@main
     with:
       src: "django_project"
       options: ""
