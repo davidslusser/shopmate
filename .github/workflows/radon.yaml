@@ -1,9 +1,8 @@
 on: [push]
 
 jobs:
-  pytest:
-    uses: davidslusser/actions/.github/workflows/pytest.yaml@main
+  radon:
+    uses: davidslusser/actions/.github/workflows/radon.yaml@main
     with:
       src: "django_project"
-      options: ""
       pip_install_command: "pip install -r requirements.txt"

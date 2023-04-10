@@ -1,7 +1,9 @@
 on: [push]
 
 jobs:
-  flake8:
-    uses: davidslusser/actions/.github/workflows/flake8.yaml@main
+  bandit:
+    uses: davidslusser/actions/.github/workflows/bandit.yaml@main
     with:
-      src: "src"
+      src: "django_project"
+      options: "-c pyproject.toml -r"
+      pip_install_command: "pip install -r requirements.txt"

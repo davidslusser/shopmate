@@ -1,8 +1,8 @@
 on: [push]
 
 jobs:
-  pytest:
-    uses: davidslusser/actions/.github/workflows/pytest.yaml@main
+  black:
+    uses: davidslusser/actions/.github/workflows/black.yaml@main
     with:
       src: "django_project"
       options: ""
