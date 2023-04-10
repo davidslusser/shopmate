@@ -1,0 +1,9 @@
+on: [push]
+
+jobs:
+  flak8:
+    uses: davidslusser/actions/.github/workflows/flak8.yaml@main
+    with:
+      src: "django_project"
+      options: ""
+      pip_install_command: "pip install -r requirements.txt"

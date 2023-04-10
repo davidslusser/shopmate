@@ -22,6 +22,7 @@ ignore = "E203,E266,H106,H904,E133"
 max-line-length = 120
 max-complexity = 25
 hang-closing = true
+exclude = "django_project/storemgr/local_test, django_project/storemgr/scripts"
 
 
 [tool.pylint.MASTER]
