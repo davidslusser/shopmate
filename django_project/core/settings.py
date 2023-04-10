@@ -9,37 +9,37 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import environ
-import os
-import sys
-
 from pathlib import Path
+
+import os
+import environ
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-ENV_PATH = os.environ.get("ENV_PATH", f"{BASE_DIR.parent}/envs/.env.local")
+ENV_PATH = os.environ.get('ENV_PATH', f'{BASE_DIR.parent}/envs/.env.local')
 # now load the contents of the defined .env file
 env = environ.Env()
 if os.path.exists(ENV_PATH):
-    print(f"loading ENV vars from {ENV_PATH}")
+    print(f'loading ENV vars from {ENV_PATH}')
     environ.Env.read_env(ENV_PATH)
 else:
-    print("NO ENV_PATH found!")
+    print('NO ENV_PATH found!')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("SECRET_KEY", "nososecretkey")
+SECRET_KEY = env.str('SECRET_KEY', 'nososecretkey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", True)
+DEBUG = env.bool('DEBUG', True)
 
-ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", "127.0.0.1").split(",")
-INTERNAL_IPS = env.str("INTERNAL_IPS", "127.0.0.1").split(",")
+ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', '127.0.0.1').split(',')
+INTERNAL_IPS = env.str('INTERNAL_IPS', '127.0.0.1').split(',')
 
 
 # Application definition
@@ -98,10 +98,14 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-        "TEST_NAME": BASE_DIR / "test.sqlite3",
+    'default': {
+        'ENGINE': env.str('DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': env.str('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'TEST_NAME': env.str('DB_TEST_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': env.str('DB_USER', 'shopmate'),
+        'PASSWORD': env.str('DB_PASSWORD', 'shopmate'),
+        'HOST': env.str('DB_HOST', 'localhost'),
+        'PORT': env.str('DB_PORT', '5432'),
     }
 }
 

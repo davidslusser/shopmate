@@ -6,7 +6,7 @@ addopts = "-s -v -x --strict-markers -m 'not extra' --doctest-modules --cov=."
 [tool.coverage.run]
 branch = true
 source = ["."]
-omit = ["*_test.py", "*/test/*", "manage.py"]
+omit = ["*_test.py", "*/tests/*", "django_project/manage.py", "django_project/storemgr/local_test/*", "django_project/storemgr/scripts/*"]
 
 
 [tool.coverage.report]
@@ -26,7 +26,7 @@ exclude = "django_project/storemgr/local_test, django_project/storemgr/scripts"
 
 
 [tool.pylint.MASTER]
-ignore-paths = ["django_project/tests", "django_project/storemgr/migrations", "django_project/storemgr/scripts"]
+ignore-paths = ["django_project/manage.py", "django_project/tests", "django_project/storemgr/migrations", "django_project/storemgr/scripts", "django_project/storemgr/local_test"]
 exit-zero = true
 
 
@@ -36,6 +36,7 @@ disable = "R0903,R0913,R0901,W0613,W0718,C0114,C0115,C0103,R1725"
 
 [tool.pylint.format]
 max-line-length = "120"
+
 
 
 [tool.bandit]
