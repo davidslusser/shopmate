@@ -21,7 +21,7 @@ django.setup()
 
 # import models
 from django.contrib.auth.models import Group, User
-from storemgr.models import Customer, Product, ProductAttribute, Order, OrderStatus
+from storemgr.models import Brand, Customer, Order, OrderStatus, Product, ProductAttribute
 
 
 def get_opts():
@@ -66,6 +66,18 @@ def create_users_and_groups():
             user.save()
 
 
+def create_brands():
+    """add some brands to the database"""
+    data_list = [
+        {"name": "CuperSool"},
+        {"name": "ChillLife"},
+        {"name": "Ironic"},
+        {"name": "NewWorld"},
+    ]
+    for data in data_list:
+        Brand.objects.get_or_create(**data, defaults=data)
+
+
 def create_product_attributes():
     """add some product attributes to the database"""
     data_list = [
@@ -82,9 +94,6 @@ def create_product_attributes():
         {"key": "style", "value": "casual"},
         {"key": "style", "value": "retro"},
         {"key": "style", "value": "business"},
-        {"key": "brand", "value": "supercool"},
-        {"key": "brand", "value": "chilllife"},
-        {"key": "brand", "value": "ironic"},
     ]
     for data in data_list:
         ProductAttribute.objects.get_or_create(**data, defaults=data)
@@ -110,10 +119,9 @@ def create_products(qty=1):
         color = ProductAttribute.objects.get_random_row(key="color")
         size = ProductAttribute.objects.get_random_row(key="size")
         style = ProductAttribute.objects.get_random_row(key="style")
-        brand = ProductAttribute.objects.get_random_row(key="brand")
         description = f"{item}; {color.value}; size {size.value}"
-        product = Product.objects.create(description=description)
-        product.attributes.add(color, size, style, brand)
+        product = Product.objects.create(brand=Brand.objects.get_random_row(), description=description)
+        product.attributes.add(color, size, style)
         product.save()
 
 
@@ -187,10 +195,25 @@ def get_random_last_name():
     return random.choice(name_list)
 
 
+def get_random_domain():
+    """get a random domain to use in an email address"""
+    domain_list = ["blah.nat", "bork.io", "totallynotfake.nope", "working.bug", "foo.bar"]
+    return random.choice(domain_list)
+
+
 def create_customers(qty=1):
     """add some customer entries to the database"""
     for i in range(qty):
-        data = dict(first_name=get_random_first_name(), last_name=get_random_last_name())
+        first_name = get_random_first_name()
+        last_name = get_random_last_name()
+        email_options_list = [
+            f"{first_name}.{last_name}",
+            f"{first_name[0]}{last_name}",
+            f"{last_name}_{first_name[0]}",
+            f"{first_name}{last_name[0]}",
+        ]
+        email = f"{random.choice(email_options_list)}@{get_random_domain()}"
+        data = dict(first_name=first_name, last_name=last_name, email=email)
         Customer.objects.get_or_create(**data, defaults=data)
 
 
@@ -209,6 +232,7 @@ def generate_test_data():
     """generate some data for testing purposes"""
     create_users_and_groups()
     create_product_attributes()
+    create_brands()
     create_products(30)
     create_customers(10)
     create_order_statuses()

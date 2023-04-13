@@ -61,3 +61,4 @@ target/
 local_test
 *.iml
 envs/.env.local
+.vscode

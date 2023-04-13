@@ -19,27 +19,27 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-ENV_PATH = os.environ.get('ENV_PATH', f'{BASE_DIR.parent}/envs/.env.local')
+ENV_PATH = os.environ.get("ENV_PATH", f"{BASE_DIR.parent}/envs/.env.local")
 # now load the contents of the defined .env file
 env = environ.Env()
 if os.path.exists(ENV_PATH):
-    print(f'loading ENV vars from {ENV_PATH}')
+    print(f"loading ENV vars from {ENV_PATH}")
     environ.Env.read_env(ENV_PATH)
 else:
-    print('NO ENV_PATH found!')
+    print("NO ENV_PATH found!")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY', 'nososecretkey')
+SECRET_KEY = env.str("SECRET_KEY", "nososecretkey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', True)
+DEBUG = env.bool("DEBUG", True)
 
-ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', '127.0.0.1').split(',')
-INTERNAL_IPS = env.str('INTERNAL_IPS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = env.str("ALLOWED_HOSTS", "127.0.0.1").split(",")
+INTERNAL_IPS = env.str("INTERNAL_IPS", "127.0.0.1").split(",")
 
 
 # Application definition
@@ -52,13 +52,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third party
+    "auditlog",
     "django_extensions",
     "handyhelpers",
-    # "djangoaddicts.codegen",
+    "userextensions",
+    "djangoaddicts.codegen",
+    "djangoaddicts.hostutils",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_filters",
     "django_filters",
+    "drf_spectacular",
     # local apps
     "storemgr",
 ]
@@ -71,6 +75,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "handyhelpers.middleware.RequireLoginMiddleware",
+    "userextensions.middleware.UserRecentsMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -78,7 +84,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "core", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -98,14 +104,14 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': env.str('DB_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': env.str('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'TEST_NAME': env.str('DB_TEST_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': env.str('DB_USER', 'shopmate'),
-        'PASSWORD': env.str('DB_PASSWORD', 'shopmate'),
-        'HOST': env.str('DB_HOST', 'localhost'),
-        'PORT': env.str('DB_PORT', '5432'),
+    "default": {
+        "ENGINE": env.str("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": env.str("DB_NAME", os.path.join(BASE_DIR, "db.sqlite3")),
+        "TEST_NAME": env.str("DB_TEST_NAME", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": env.str("DB_USER", "shopmate"),
+        "PASSWORD": env.str("DB_PASSWORD", "shopmate"),
+        "HOST": env.str("DB_HOST", "localhost"),
+        "PORT": env.str("DB_PORT", "5432"),
     }
 }
 
@@ -144,7 +150,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(str(BASE_DIR), "staticroot")
+STATIC_URL = "/static/"
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+STATICFILES_DIRS = (os.path.join(str(BASE_DIR), "core/static"),)
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -168,4 +184,27 @@ REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 100,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "ShopMate APIs",
+    "DESCRIPTION": "RESTful APIs for ShopMate",
+    "VERSION": "1.0.0",
+}
+
+
+BASE_TEMPLATE = "base.htm"
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/userextensions/user_login_redirect"
+LOGIN_REDIRECT_URL_DEFAULT = "/"
+SESSION_COOKIE_AGE = 28800
+SKIP_FIXED_URL_LIST = ["/list_recents/"]
+
+REQUIRED_LOGIN_IGNORE_PATHS = [
+    "/accounts/login/",
+    "/accounts/logout/",
+    "/logout",
+    "/admin/",
+    "/admin/login/",
+]

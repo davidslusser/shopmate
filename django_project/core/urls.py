@@ -15,8 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import logout_then_login
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from core import views
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("logout/", logout_then_login, name="logout"),
+    path("register/", views.RegisterUser.as_view(), name="register"),
+    path(
+        "userextensions/",
+        include("userextensions.urls"),
+    ),
+    path(
+        "handyhelpers/",
+        include("handyhelpers.urls"),
+    ),
+    # API documentation
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger"),
+    path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path("", include("storemgr.urls", namespace="root")),
     path("storemgr/", include("storemgr.urls", namespace="storemgr")),
 ]
