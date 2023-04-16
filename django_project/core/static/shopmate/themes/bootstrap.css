@@ -19,7 +19,7 @@
   --info: #3399F3;
   --warning: #D47500;
   --danger: #CD0200;
-  --light: #f5f5f5;
+  --light: #f1f1f1;
   --dark: #333;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -51,7 +51,7 @@ body {
   line-height: 1.5;
   color: #000000;
   text-align: left;
-  background-color: #efeded; }
+  background-color: #fdfdfd; }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -3306,7 +3306,7 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
   border-radius: 0.25rem; }
   .card > hr {
     margin-right: 0;

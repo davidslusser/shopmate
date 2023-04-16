@@ -19,6 +19,12 @@
             <td>{{ row.updated_at }}</td>
             <!-- actions -->
             <td>
+                <!-- view audit log -->
+                <a href="#" title="view audit log" class="hvr-grow mx-1"
+                   onClick="showInfo('{% url "handyhelpers:get_auditlog_entries" "brand" row.pk %}', '{{ row.id }}', 'Audit Log: <small><i>{{ row.pk }}</i></small>', 'xl');"
+                   role="button" data-bs-toggle="tooltip" data-placement="left">
+                    <i class="fa fa-history fa-fw"></i>
+                </a>
             </td>
         </tr>
     {% endfor %}
