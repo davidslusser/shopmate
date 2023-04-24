@@ -33,6 +33,10 @@ urlpatterns = [
         "handyhelpers/",
         include("handyhelpers.urls"),
     ),
+    path(
+        "hostutils/",
+        include("djangoaddicts.hostutils.urls"),
+    ),
     # API documentation
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger"),

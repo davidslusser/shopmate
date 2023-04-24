@@ -112,13 +112,13 @@ class StoreMgrAnnualTrendView(AnnualTrendView):
 
 class StoreMgrDashboard(View):
     """ """
-    base_template = getattr(settings, 'BASE_TEMPLATE', 'handyhelpers/handyhelpers_base.htm')
     title = 'Annual Progress Report'
     sub_title = 'cumulative data added over the past year'
     template_name = 'storemgr/custom/dashboard.html'
     
     def get(self, request, *args, **kwargs):
         """ """
+        raise Exception("blah")
         context = {}
         context['counts'] = [
             {"title": "Brands", 
