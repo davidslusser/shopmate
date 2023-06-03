@@ -4,6 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_flex_fields import is_expanded
+from handyhelpers.drf_permissions import InAnyGroup
 
 # import models
 from storemgr.models import Brand, Customer, Invoice, Order, OrderStatus, Product, ProductAttribute
@@ -31,8 +32,12 @@ from storemgr.filtersets import (
 )
 
 
-class BrandViewSet(viewsets.ReadOnlyModelViewSet):
+class BrandViewSet(viewsets.ModelViewSet):
+# class BrandViewSet(viewsets.ModelViewSet, InAnyGroup):
     """API endpoint that allows Brands to be viewed"""
+    # permission_classes = (InAnyGroup,)
+    # permission_dict = {'GET': ['blah'],
+    #                    'POST': ['admin', 'orderers']}
 
     model = Brand
     queryset = model.objects.all()
@@ -51,7 +56,7 @@ class BrandViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No products available for this brand ", status.HTTP_400_BAD_REQUEST)
+            return Response("No products available for this brand ", status.HTTP_404_NOT_FOUND)
 
 
 class CustomerViewSet(viewsets.ReadOnlyModelViewSet):
@@ -74,7 +79,7 @@ class CustomerViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No orders available for this customer ", status.HTTP_400_BAD_REQUEST)
+            return Response("No orders available for this customer ", status.HTTP_404_NOT_FOUND)
 
 
 class InvoiceViewSet(viewsets.ReadOnlyModelViewSet):
@@ -123,11 +128,11 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No invoices available for this order ", status.HTTP_400_BAD_REQUEST)
+            return Response("No invoices available for this order ", status.HTTP_404_NOT_FOUND)
 
     @action(detail=True, methods=["get"])
     def products(self, request, *args, **kwargs):
-        """get the productss associated with this Order instance if available"""
+        """get the products associated with this Order instance if available"""
         instance = self.get_object()
         data = instance.products.all()
         if data:
@@ -137,7 +142,7 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No productss available for this order ", status.HTTP_400_BAD_REQUEST)
+            return Response("No products available for this order ", status.HTTP_404_NOT_FOUND)
 
     def get_queryset(self):
         queryset = self.model.objects.all().select_related(
@@ -174,7 +179,7 @@ class OrderStatusViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No orders available for this orderstatus ", status.HTTP_400_BAD_REQUEST)
+            return Response("No orders available for this orderstatus ", status.HTTP_404_NOT_FOUND)
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
@@ -196,7 +201,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No invoices available for this product ", status.HTTP_400_BAD_REQUEST)
+            return Response("No invoices available for this product ", status.HTTP_404_NOT_FOUND)
 
     @action(detail=True, methods=["get"])
     def order_set(self, request, *args, **kwargs):
@@ -210,7 +215,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No orders available for this product ", status.HTTP_400_BAD_REQUEST)
+            return Response("No orders available for this product ", status.HTTP_404_NOT_FOUND)
 
     @action(detail=True, methods=["get"])
     def attributes(self, request, *args, **kwargs):
@@ -224,7 +229,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No attributess available for this product ", status.HTTP_400_BAD_REQUEST)
+            return Response("No attributess available for this product ", status.HTTP_404_NOT_FOUND)
 
     def get_queryset(self):
         queryset = self.model.objects.all().select_related(
@@ -257,4 +262,4 @@ class ProductAttributeViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception as err:
                 return Response(str(err), status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response("No products available for this productattribute ", status.HTTP_400_BAD_REQUEST)
+            return Response("No products available for this productattribute ", status.HTTP_404_NOT_FOUND)

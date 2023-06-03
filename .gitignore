@@ -62,3 +62,7 @@ local_test
 *.iml
 envs/.env.local
 .vscode
+.pytest_cache
+.mypy_cache
+django_project/django_logs
+django_project/yarn.lock

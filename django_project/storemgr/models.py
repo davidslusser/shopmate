@@ -58,7 +58,7 @@ class Invoice(HandyHelperBaseModel):
         ordering = ("-created_at",)
 
     def __str__(self):
-        return self.order.order_id
+        return getattr(self.order, "order_id", str(self.pk))
 
 
 class Order(HandyHelperBaseModel):
@@ -124,7 +124,7 @@ class ProductAttribute(HandyHelperBaseModel):
     value = models.CharField(max_length=32, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.key}: {self.value}"
+        return self.key
 
     class Meta:
         unique_together = (("key", "value"),)

@@ -118,7 +118,6 @@ class StoreMgrDashboard(View):
     
     def get(self, request, *args, **kwargs):
         """ """
-        raise Exception("blah")
         context = {}
         context['counts'] = [
             {"title": "Brands", 

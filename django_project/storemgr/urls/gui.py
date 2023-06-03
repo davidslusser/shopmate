@@ -14,4 +14,5 @@ urlpatterns = [
     path("list_customers/", gui.ListCustomers.as_view(), name="list_customers"),
     path("list_orders/", gui.ListOrders.as_view(), name="list_orders"),
     path("list_products/", gui.ListProducts.as_view(), name="list_products"),
+    path("test/", gui.Test.as_view(), name="test"),
 ]

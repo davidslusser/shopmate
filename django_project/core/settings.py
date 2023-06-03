@@ -177,7 +177,6 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
@@ -209,6 +208,7 @@ REQUIRED_LOGIN_IGNORE_PATHS = [
     "/logout",
     "/admin/",
     "/admin/login/",
+    # "/storemgr/api/",
 ]
 
 

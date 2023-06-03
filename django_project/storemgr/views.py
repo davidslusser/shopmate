@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from django.views.generic import View
 from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
 from handyhelpers.permissions import InAnyGroup
 
@@ -91,3 +92,10 @@ class ListProducts(HandyHelperListPlusCreateAndFilterView):
     filter_form_title = "<b>Filter Products: </b><small> </small>"
     filter_form_modal = "filter_products"
     filter_form_tool_tip = "filter products"
+
+
+from djangoaddicts.hostutils.views import ShowHost
+class Test(ShowHost):
+    """Display dashboard like page showing an overview of host data"""
+    template_name = "storemgr/custom/test.html"
+    title = "This is a new title"
