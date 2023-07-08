@@ -1,0 +1,19 @@
+$primary: #446E9B;
+$secondary: #999;
+$success: #3CB521;
+$info: #3399F3;
+$warning: #D47500;
+$danger: #CD0200;
+
+// $primary: #4f6d7a;
+// $secondary: #5c8a8b;
+// $success: #94c7a1;
+// $info: #68b3c8;
+// $warning: #f0ad4e;
+// $danger: #d9534f;
+
+a {
+    @extend .text-decoration-none;
+  }
+
+@import "../../../../staticroot/node_modules/bootstrap/scss/bootstrap";

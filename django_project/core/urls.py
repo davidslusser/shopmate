@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import logout_then_login
@@ -27,15 +28,15 @@ urlpatterns = [
     path("register/", views.RegisterUser.as_view(), name="register"),
     path(
         "userextensions/",
-        include("userextensions.urls"),
+        include("userextensions.urls")
     ),
     path(
         "handyhelpers/",
-        include("handyhelpers.urls"),
+        include("handyhelpers.urls")
     ),
     path(
         "hostutils/",
-        include("djangoaddicts.hostutils.urls"),
+        include("djangoaddicts.hostutils.urls")
     ),
     # API documentation
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
@@ -43,4 +44,9 @@ urlpatterns = [
     path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path("", include("storemgr.urls", namespace="root")),
     path("storemgr/", include("storemgr.urls", namespace="storemgr")),
+
 ]
+
+
+if settings.DEBUG:
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')),)

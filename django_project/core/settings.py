@@ -59,11 +59,13 @@ INSTALLED_APPS = [
     "userextensions",
     "djangoaddicts.codegen",
     "djangoaddicts.hostutils",
+    "djangoaddicts.signalcontrol",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_filters",
     "django_filters",
     "drf_spectacular",
+    "debug_toolbar",
     # local apps
     "storemgr",
 ]
@@ -76,6 +78,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "handyhelpers.middleware.RequireLoginMiddleware",
     "userextensions.middleware.UserRecentsMiddleware",
 ]
@@ -200,12 +203,13 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/userextensions/user_login_redirect"
 LOGIN_REDIRECT_URL_DEFAULT = "/"
 SESSION_COOKIE_AGE = 28800
-SKIP_FIXED_URL_LIST = ["/list_recents/"]
+
 
 REQUIRED_LOGIN_IGNORE_PATHS = [
     "/accounts/login/",
     "/accounts/logout/",
     "/logout",
+    "register",
     "/admin/",
     "/admin/login/",
     # "/storemgr/api/",
@@ -279,4 +283,3 @@ LOGGING = {
         }
     },
 }
-
