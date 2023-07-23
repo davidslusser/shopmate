@@ -4,7 +4,6 @@
     <thead>
     <tr>
         <th data-field="name" data-sortable="true">Name</th>
-        <th data-field="manufacturer" data-sortable="true">Manufacturer</th>
         <th data-field="enabled" data-sortable="true">Enabled</th>
         <th data-field="created_at" data-sortable="true">Created At</th>
         <th data-field="updated_at" data-sortable="true">Updated At</th>
@@ -14,8 +13,7 @@
     <tbody>
     {% for row in queryset %}
         <tr>
-            <td><a href="{{ row.get_absolute_url }}">{{ row.name }}</a></td>
-            <td><a href="{{ row.manufacturer.get_absolute_url }}">{{ row.manufacturer }}</a></td>
+            <td>{{ row.name }}</td>
             <td>
                 {% if row.enabled %}
                 <span class="text-primary"><i class="fa-solid fa-check"></i></span>
@@ -25,11 +23,11 @@
             </td>
             <td>{{ row.created_at }}</td>
             <td>{{ row.updated_at }}</td>
-            {# actions #}
+            <!-- actions -->
             <td>
                 <!-- view audit log -->
                 <a href="#" title="view audit log" class="hvr-grow mx-1"
-                   onClick="showInfo('{% url "handyhelpers:get_auditlog_entries" "brand" row.pk %}', '{{ row.id }}', 'Audit Log: <small><i>{{ row.pk }}</i></small>', 'xl');"
+                   onClick="showInfo('{% url "handyhelpers:get_auditlog_entries" "manufacturer" row.pk %}', '{{ row.id }}', 'Audit Log: <small><i>{{ row.pk }}</i></small>', 'xl');"
                    role="button" data-bs-toggle="tooltip" data-placement="left">
                     <i class="fa fa-history fa-fw"></i>
                 </a>

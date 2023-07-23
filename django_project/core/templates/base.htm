@@ -83,7 +83,8 @@
         {% block mainnavbar %}
         <nav class="navbar navbar-expand-md navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand me-3" href="{% url 'storemgr:home' %}"><b>Shop<span class="text-secondary">Mate</span></b></a>
+                {% comment %} <a class="navbar-brand me-3 fw-bold" href="{% url 'storemgr:home' %}">Shop<span class="text-secondary">Mate</span></a> {% endcomment %}
+                <a class="navbar-brand fw-bold" href="{% url 'storemgr:home' %}">{{ PROJECT_NAME|title }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -96,16 +97,16 @@
                     </ul>
 
                     {% if user.is_authenticated %}
-                    <ul class="navbar-nav me-5">
-                        <li class="nav-item dropdown align-right ms-2 me-4">
-                            <a class="nav-link" href="#">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown align-end mx-2">
+                            <a class="nav-link" href="#" hx-get="{% url 'handyhelpers:about' %}" hx-target="#modal_wrapper">
                                 <b class="fa fa-info-circle fw"></b>
                             </a>
                         </li>
 
                         {% include 'hostutils/bs5/snippets/hostutils_nav_menu.htm' %}
 
-                        <li class="nav-item dropdown align-right ms-2 me-4">
+                        <li class="nav-item dropdown align-end ms-2 me-4">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <b class="fa fa-user fw me-3"></b><span class="hidden-sm">{{ user }}</span>
                             </a>
@@ -136,8 +137,11 @@
 
             {# block to contain main page content #}
             {% block content %} Default Content - Local page should overwrite this {% endblock content %}
-            {% block modals %} {% endblock modals %}
         </section>
+
+        {% block modals %} 
+        {% include 'handyhelpers/htmx/bs5/generic_modal.htm' %}
+        {% endblock modals %}
 
         {% block mainfooter %}
             <footer class="mt-auto mb-4">

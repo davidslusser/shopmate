@@ -61,7 +61,6 @@ class InvoiceFilterSet(FilterSet):
             "id": "__all__",
             "order": "__all__",
             "product": "__all__",
-            "qty": "__all__",
             "updated_at": "__all__",
         }
 

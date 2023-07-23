@@ -17,7 +17,13 @@
             <td>{{ row.sku }}</td>
             <td>{{ row.brand }}</td>
             <td>{{ row.description }}</td>
-            <td>{{ row.enabled }}</td>
+            <td>
+                {% if row.enabled %}
+                <span class="text-primary"><i class="fa-solid fa-check"></i></span>
+                {% else %}
+                <span class="text-danger"><i class="fa-solid fa-xmark"></i></span>
+                {% endif %}
+            </td>
             <td>{{ row.created_at }}</td>
             <!-- actions -->
             <td>

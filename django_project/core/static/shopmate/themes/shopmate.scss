@@ -12,6 +12,9 @@ $danger: #CD0200;
 // $warning: #f0ad4e;
 // $danger: #d9534f;
 
+$enable-negative-margins: true;
+$enable-shadows: true;
+
 a {
     @extend .text-decoration-none;
   }

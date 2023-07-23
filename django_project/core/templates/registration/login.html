@@ -11,7 +11,7 @@
             <div class="col-center-block col-sm-6">
                 {% if form.errors %}
                     <div class="alert alert-danger">
-                        <button type="button" class="close" data-bs-dismiss="alert">×</button>
+                        <button type="button" class="close" data-bs-dismiss="alert">x</button>
                         <p>Your username and password didn't match or invalid username provided. Please try again.</p>
                     </div>
                 {% endif %}
@@ -19,13 +19,13 @@
                 {% if next %}
                     {% if user.is_authenticated %}
                         <div class="alert alert-danger">
-                            <button type="button" class="close" data-bs-dismiss="alert">×</button>
+                            <button type="button" class="close" data-bs-dismiss="alert">x</button>
                             <p>Your account doesn't have access to this page. To proceed,
                                 please login with an account that has access.</p>
                         </div>
                     {% else %}
                         <div class="alert alert-danger">
-                            <button type="button" class="close" data-bs-dismiss="alert">×</button>
+                            <button type="button" class="close" data-bs-dismiss="alert">x</button>
                             <p>Please login to see this page.</p>
                         </div>
                     {% endif %}

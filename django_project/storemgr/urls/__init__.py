@@ -1,6 +1,6 @@
-from .api import urlpatterns as api_urls
+from .rest import urlpatterns as rest_urls
 from .gui import urlpatterns as gui_urls
 
 app_name = "storemgr"
 
-urlpatterns = api_urls + gui_urls
+urlpatterns = rest_urls + gui_urls

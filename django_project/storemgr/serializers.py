@@ -56,7 +56,6 @@ class InvoiceSerializer(FlexFieldsModelSerializer):
             "id",
             "order",
             "product",
-            "qty",
             "updated_at",
         ]
 

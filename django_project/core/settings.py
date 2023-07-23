@@ -96,7 +96,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "handyhelpers.context_processors.base_template"
+                # "handyhelpers.context_processors.base_template"
+                "handyhelpers.context_processors.get_settings",
             ],
         },
     },
@@ -283,3 +284,21 @@ LOGGING = {
         }
     },
 }
+
+
+CACHES = {
+'default': {
+    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+    'LOCATION': '/dev/shm',
+    'TIMEOUT': 120,
+    'OPTIONS': {
+        'MAX_ENTRIES': 1000
+    }
+  }
+}
+
+
+PROJECT_NAME = "Shopmate"
+PROJECT_DESCRIPTION = """Shopmate is an ecommerce-like backend service used to showcase django packages published by <a href="https://github.com/djangoaddicts" target="_blank">DjangoAddicts</a> and provide examples and training of Django concepts."""
+PROJECT_VERSION = env.str("PROJECT_VERSION", "0.0.1")
+PROJECT_SOURCE = "https://github.com/davidslusser/shopmate"

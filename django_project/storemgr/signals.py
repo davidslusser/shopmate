@@ -23,7 +23,7 @@ def log_user_login(sender, user, request, **kwargs):
 
 # log user login failed
 @receiver(user_login_failed)
-@signal_control
+# @signal_control
 def log_user_login_failed(sender, user=None, **kwargs):
     """ log user login to user log """
     login_username = kwargs['credentials'].get('username', None)
@@ -37,7 +37,7 @@ def log_user_login_failed(sender, user=None, **kwargs):
 
 # log user logout
 @receiver(user_logged_out)
-@signal_control
+# @signal_control
 def log_user_logout(sender, user, **kwargs):
     """ log user logout to user log """
     user_logger.info(f'logout successful for user: {user}')

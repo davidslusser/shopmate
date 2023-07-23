@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from django.views.generic import View
+from django.views.generic import DetailView, View
 from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
 from handyhelpers.permissions import InAnyGroup
 
 # import models
-from storemgr.models import Brand, Customer, Order, Product
+from storemgr.models import Brand, Customer, Manufacturer, Order, Product
 
 # import forms
 from storemgr.forms import FilterOrderForm, FilterProductForm
@@ -29,7 +29,7 @@ class Index(HandyHelperIndexView):
         #     'description': 'Run custom searches',
         # },
         {
-            "url": "/storemgr/api/",
+            "url": "/storemgr/rest/",
             "icon": "fas fa-download",
             "title": "APIs",
             "description": "List available RESTful APIs",
@@ -54,9 +54,8 @@ class Index(HandyHelperIndexView):
 
 class ListBrands(HandyHelperListPlusCreateAndFilterView):
     """list available Brand entries"""
-    queryset = Brand.objects.all()
+    queryset = Brand.objects.all().select_related("manufacturer")
     title = "Brands"
-    page_description = ""
     table = "storemgr/table/brands.htm"
 
 
@@ -64,19 +63,24 @@ class ListCustomers(HandyHelperListPlusCreateAndFilterView):
     """list available Customer entries"""
     queryset = Customer.objects.all()
     title = "Customers"
-    page_description = ""
     table = "storemgr/table/customers.htm"
+
+
+class ListManufacturers(HandyHelperListPlusCreateAndFilterView):
+    """list available Manufacturer entries"""
+    queryset = Manufacturer.objects.all()
+    title = "Manufacturers"
+    table = "storemgr/table/manufacturers.htm"
 
 
 class ListOrders(HandyHelperListPlusCreateAndFilterView):
     """list available Order entries"""
     queryset = Order.objects.all().select_related("status", "customer").prefetch_related("products")
     title = "Orders"
-    page_description = ""
     table = "storemgr/table/orders.htm"
 
     filter_form_obj = FilterOrderForm
-    filter_form_title = "<b>Filter Orders: </b><small> </small>"
+    filter_form_title = "<b>Filter Orders: </b>"
     filter_form_modal = "filter_orders"
     filter_form_tool_tip = "filter orders"
 
@@ -85,17 +89,36 @@ class ListProducts(HandyHelperListPlusCreateAndFilterView):
     """list available Product entries"""
     queryset = Product.objects.all().prefetch_related("attributes")
     title = "Products"
-    page_description = ""
     table = "storemgr/table/products.htm"
 
     filter_form_obj = FilterProductForm
-    filter_form_title = "<b>Filter Products: </b><small> </small>"
+    filter_form_title = "<b>Filter Products: </b>"
     filter_form_modal = "filter_products"
     filter_form_tool_tip = "filter products"
 
 
-from djangoaddicts.hostutils.views import ShowHost
-class Test(ShowHost):
-    """Display dashboard like page showing an overview of host data"""
-    template_name = "storemgr/custom/test.html"
-    title = "This is a new title"
+class DetailBrand(DetailView):
+    model = Brand
+    template_name = 'storemgr/detail/brand.html'
+    # context_object_name = 'brand'
+
+
+class DetailCustomer(DetailView):
+    model = Customer
+    template_name = 'storemgr/detail/customer.html'
+
+
+class DetailManufacturer(DetailView):
+    model = Manufacturer
+    template_name = 'storemgr/detail/manufacturer.html'
+    # context_object_name = 'brand'
+
+
+class DetailProduct(DetailView):
+    model = Product
+    template_name = 'storemgr/detail/product.html'
+
+
+class DetailOrder(DetailView):
+    model = Order
+    template_name = 'storemgr/detail/order.html'

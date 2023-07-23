@@ -2,10 +2,10 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import View
 from handyhelpers.views.report import AnnualTrendView, AnnualStatView, AnnualProgressView
-from handyhelpers.views.report import (get_colors, build_day_week_month_year_charts, get_timestamps)
+from handyhelpers.views.report import get_colors
 
 # import models
-from storemgr.models import (Brand, Customer, Order, OrderStatus, Product)
+from storemgr.models import (Brand, Customer, Manufacturer, Order, OrderStatus, Product)
 
 
 class StoreMgrAnnualProgressView(AnnualProgressView):
@@ -116,10 +116,15 @@ class StoreMgrDashboard(View):
     sub_title = 'cumulative data added over the past year'
     template_name = 'storemgr/custom/dashboard.html'
     
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         """ """
         context = {}
         context['counts'] = [
+            {"title": "Manufacturers", 
+             "count": Manufacturer.objects.filter(enabled=True).count(), 
+             "icon": Manufacturer.get_icon(), 
+             "link": "/storemgr/list_manufacturers/?enabled=True"},
+            
             {"title": "Brands", 
              "count": Brand.objects.filter(enabled=True).count(), 
              "icon": Brand.get_icon(), 
@@ -128,7 +133,7 @@ class StoreMgrDashboard(View):
             {"title": "Customers", 
              "count": Customer.objects.filter().count(), 
              "icon": Customer.get_icon(), 
-             "link": "/storemgr/list_customers/"},
+             "link": "/storemgr/list_customers"},
             
             {"title": "Products", 
              "count": Product.objects.filter(enabled=True).count(), 
@@ -138,7 +143,7 @@ class StoreMgrDashboard(View):
             {"title": "Orders", 
              "count": Order.objects.filter().count(), 
              "icon": Order.get_icon(), 
-             "link": "/storemgr/list_orders/"},
+             "link": "/storemgr/list_orders"},
             ]
 
         # get Orders by brand
@@ -156,7 +161,7 @@ class StoreMgrDashboard(View):
         status_list = [i.name for i in OrderStatus.objects.all()]
         context['orders_by_status'] = dict(
             id='orders_by_status',
-            type='pie',
+            type='bar',
             label_list=status_list,
             value_list=[Order.objects.filter(**{'status__name': status}).count() for status in status_list],
             list_view='/storemgr/list_orders?status__name=',
