@@ -1,0 +1,19 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+{% load static %}
+
+{% block local_head %}
+    {% include 'handyhelpers/component/chartjs_components.htm' %}
+{% endblock %}
+
+{% block content %}
+<section class="animated fadeIn" style="animation-delay: .15s;">
+    <header class="m-5">
+        <div class="headline text-center">
+            <div class="container">
+                <div class="h1 text-primary fw-bold mb-3">{{ object }}</div>
+            </div>
+        </div>
+    </header>
+</section>
+
+{% endblock content %}

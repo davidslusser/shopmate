@@ -24,5 +24,5 @@ urlpatterns = [
     path("detail_customer/<int:pk>", gui.DetailCustomer.as_view(), name="detail_customer"),
     path("detail_manufacturer/<int:pk>", gui.DetailManufacturer.as_view(), name="detail_manufacturer"),
     path("detail_order/<str:pk>", gui.DetailOrder.as_view(), name="detail_order"),
-    path("detail_product/<int:pk>", gui.DetailProduct.as_view(), name="detail_product"),
+    path("detail_product/<str:pk>", gui.DetailProduct.as_view(), name="detail_product"),
 ]

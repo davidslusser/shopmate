@@ -19,4 +19,13 @@ a {
     @extend .text-decoration-none;
   }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+  
+.fs-small {
+  font-size: .5rem !important; 
+}
+
+
 @import "../../../../staticroot/node_modules/bootstrap/scss/bootstrap";

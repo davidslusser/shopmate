@@ -91,9 +91,11 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
+                        {% if user.is_authenticated %}
                         {% include 'storemgr/navigation/data.htm' %}
                         {% include 'storemgr/navigation/report.htm' %}
                         {% include 'storemgr/navigation/api.htm' %}
+                        {% endif %}
                     </ul>
 
                     {% if user.is_authenticated %}

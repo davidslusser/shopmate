@@ -299,6 +299,6 @@ CACHES = {
 
 
 PROJECT_NAME = "Shopmate"
-PROJECT_DESCRIPTION = """Shopmate is an ecommerce-like backend service used to showcase django packages published by <a href="https://github.com/djangoaddicts" target="_blank">DjangoAddicts</a> and provide examples and training of Django concepts."""
+PROJECT_DESCRIPTION = """Shopmate is an ecommerce-like backend service used to showcase django packages published by <a href="https://github.com/djangoaddicts" target="_blank">DjangoAddicts</a> and provide training and examples of Django concepts."""
 PROJECT_VERSION = env.str("PROJECT_VERSION", "0.0.1")
 PROJECT_SOURCE = "https://github.com/davidslusser/shopmate"

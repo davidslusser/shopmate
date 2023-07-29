@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from auditlog.registry import auditlog
 from handyhelpers.models import HandyHelperBaseModel
+from handyhelpers.views.report import get_colors
 
 
 class Brand(HandyHelperBaseModel):
@@ -15,18 +16,46 @@ class Brand(HandyHelperBaseModel):
     def __str__(self) -> str:
         return self.name
 
-    def get_absolute_url(self):
+    def disable(self):
+        """disable this brand and all of its products"""
+        self.enabled = False
+        self.product_set.update(enabled=False)
+        self.save()
+
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:detail_brand", kwargs={"pk": self.pk})
 
     @staticmethod
     def get_icon() -> str:
         return """<i class="fa-solid fa-language"></i>"""
 
-    def disable(self):
-        """disable this brand and all of its products"""
-        self.enabled = False
-        self.product_set.update(enabled=False)
-        self.save()
+    def get_products(self):
+        return self.product_set.all()
+    
+    def get_orders(self):
+        return Order.objects.filter(products__brand=self).select_related("status")
+
+    def get_orders_by_product(self):
+        order_qs = self.get_orders().values('products__sku').annotate(qty=models.Count('products__sku'))
+        return dict(
+            id="orders_by_product",
+            type="bar",
+            label_list=[i['products__sku'] for i in order_qs],
+            value_list=[i['qty'] for i in order_qs],
+            list_view=f"/storemgr/list_orders?products__brand__name={self.name}&products__sku=",
+            color_list=get_colors(order_qs.count()),
+        )
+
+    def get_orders_by_status(self):
+        order_qs = self.get_orders().values('status__name').annotate(qty=models.Count('status__name'))
+        return dict(
+            id="orders_by_status",
+            type="bar",
+            label_list=[i['status__name'] for i in order_qs],
+            value_list=[i['qty'] for i in order_qs],
+            list_view=f"/storemgr/list_orders?products__brand__name={self.name}&status__name=",
+            color_list=get_colors(order_qs.count()),
+        )
 
 
 class Customer(HandyHelperBaseModel):
@@ -41,7 +70,7 @@ class Customer(HandyHelperBaseModel):
     def __str__(self):
         return self.customer_id
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:detail_customer", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
@@ -67,7 +96,7 @@ class Invoice(HandyHelperBaseModel):
     def __str__(self) -> str:
         return getattr(self.order, "order_id", str(self.pk))
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:invoice", kwargs={"pk": self.pk})
 
 
@@ -78,7 +107,7 @@ class Manufacturer(HandyHelperBaseModel):
     def __str__(self) -> str:
         return self.name
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:detail_manufacturer", kwargs={"pk": self.pk})
 
     @staticmethod
@@ -106,7 +135,7 @@ class Order(HandyHelperBaseModel):
     def __str__(self) -> str:
         return self.order_id
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:detail_order", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
@@ -153,7 +182,7 @@ class Product(HandyHelperBaseModel):
     def __str__(self) -> str:
         return self.sku
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("storemgr:detail_product", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):

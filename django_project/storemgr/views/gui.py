@@ -100,7 +100,7 @@ class ListProducts(HandyHelperListPlusCreateAndFilterView):
 class DetailBrand(DetailView):
     model = Brand
     template_name = 'storemgr/detail/brand.html'
-    # context_object_name = 'brand'
+    context_object_name = 'brand'
 
 
 class DetailCustomer(DetailView):
