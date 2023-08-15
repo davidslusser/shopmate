@@ -1,0 +1,73 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+{% load static %}
+
+{% block local_head %}
+    {% include 'handyhelpers/component/chartjs_components.htm' %}
+{% endblock %}
+
+{% block content %}
+<section class="animated fadeIn" style="animation-delay: .15s;">
+    <header class="m-5">
+        <div class="headline text-center">
+            <div class="container">
+                <div class="h1 text-primary fw-bold mb-3">Shop<span class="text-secondary">Mate</span> Dashboard</div>
+            </div>
+        </div>
+    </header>
+</section>
+
+
+<div class="container-fluid my-5 animated fadeIn" style="animation-delay: .25s;">
+    <div class="row">
+        {% for item in counts %}
+        {% comment %} <div class="col-sm-12 col-md-2"> {% endcomment %}
+            {% comment %} <div class="card d-flex flex-fill mx-2 mb-3 bg-white shadow hvr-grow"> {% endcomment %}
+        <div class="col-12 col-sm mx-2 mb-4 mb-lg-0">
+            <div class="card shadow h-100 w-100 hvr-grow">
+                <a href="{{ item.link }}">
+                    <div class="card-body text-secondary">
+                        <div class="row">
+                            <div class="col-4 text-start text-primary h2">{{ item.icon|safe }}</div>
+                            <div class="col-8 text-end text-primary fw-bold h2">{{ item.count }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-3 text-start text-secondary fw-bold h4">{{ item.title|safe }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container-fluid my-5 animated fadeIn" style="animation-delay: .35s;">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="card mx-2 mb-3 bg-white shadow" style="height: 300px;">
+                <div class="card-header border-0 bg-white text-center text-secondary fw-bold h2">
+                    Orders by Brand
+                </div>
+                <div class="card-body">
+                    <canvas id="orders_by_brand"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card mx-2 mb-3 bg-white shadow" style="height: 300px;">
+                <div class="card-header border-0 bg-white text-center text-secondary fw-bold h2">
+                    Orders by Status
+                </div>
+                <div class="card-body">
+                    <canvas id="orders_by_status"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'handyhelpers/report/theme_colors.htm' %}
+{% with orders_by_status as chart %}{% include 'handyhelpers/report/chartjs/bar_chart.htm' %}{% endwith %}
+{% with orders_by_brand as chart %}{% include 'handyhelpers/report/chartjs/bar_chart.htm' %}{% endwith %}
+
+{% endblock content %}

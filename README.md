@@ -8,4 +8,4 @@
 |Black|code formatting|![Black](https://github.com/davidslusser/workflow_tests/actions/workflows/black.yaml/badge.svg)|
 |Pylint|static code analysis|![Pylint](https://github.com/davidslusser/workflow_tests/actions/workflows/pylint.yaml/badge.svg)|
 |Pytest|unit testing|![Pytest](https://github.com/davidslusser/workflow_tests/actions/workflows/pytest.yaml/badge.svg)|
-|Radon|unit testing|![Radon](https://github.com/davidslusser/workflow_tests/actions/workflows/radon.yaml/badge.svg)|
+|Radon|code complexity|![Radon](https://github.com/davidslusser/workflow_tests/actions/workflows/radon.yaml/badge.svg)|

@@ -8,10 +8,13 @@ import django
 import environ
 import random
 
+from faker import Faker
+
 
 __version__ = "0.0.1"
 
-__doc__ = """ Script for generating database entries for test purposes. """
+__doc__ = """Script for generating database entries for test purposes."""
+
 
 # setup django
 sys.path.append(str(environ.Path(__file__) - 3))
@@ -21,7 +24,7 @@ django.setup()
 
 # import models
 from django.contrib.auth.models import Group, User
-from storemgr.models import Customer, Product, ProductAttribute, Order, OrderStatus
+from storemgr.models import Brand, Customer, Invoice, Manufacturer, Order, OrderStatus, Product, ProductAttribute
 
 
 def get_opts():
@@ -66,6 +69,32 @@ def create_users_and_groups():
             user.save()
 
 
+def create_manufacturers():
+    data_list = [
+        {"name": "Acme"},
+        {"name": "Equity"},
+        {"name": "Mega"},
+        {"name": "WorldWide"},
+    ]
+    for data in data_list:
+        Manufacturer.objects.get_or_create(**data, defaults=data)
+
+
+def create_brands():
+    """add some brands to the database"""
+    data_list = [
+        {"name": "CuperSool", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "ChillLife", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "Dunno", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "Ironic", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "Justify", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "MakeMe", "manufacturer": Manufacturer.objects.get_random_row()},
+        {"name": "NewWorld", "manufacturer": Manufacturer.objects.get_random_row()},
+    ]
+    for data in data_list:
+        Brand.objects.get_or_create(**data, defaults=data)
+
+
 def create_product_attributes():
     """add some product attributes to the database"""
     data_list = [
@@ -82,9 +111,6 @@ def create_product_attributes():
         {"key": "style", "value": "casual"},
         {"key": "style", "value": "retro"},
         {"key": "style", "value": "business"},
-        {"key": "brand", "value": "supercool"},
-        {"key": "brand", "value": "chilllife"},
-        {"key": "brand", "value": "ironic"},
     ]
     for data in data_list:
         ProductAttribute.objects.get_or_create(**data, defaults=data)
@@ -110,10 +136,9 @@ def create_products(qty=1):
         color = ProductAttribute.objects.get_random_row(key="color")
         size = ProductAttribute.objects.get_random_row(key="size")
         style = ProductAttribute.objects.get_random_row(key="style")
-        brand = ProductAttribute.objects.get_random_row(key="brand")
         description = f"{item}; {color.value}; size {size.value}"
-        product = Product.objects.create(description=description)
-        product.attributes.add(color, size, style, brand)
+        product = Product.objects.create(brand=Brand.objects.get_random_row(), description=description)
+        product.attributes.add(color, size, style)
         product.save()
 
 
@@ -129,68 +154,12 @@ def create_order_statuses():
     for data in data_list:
         OrderStatus.objects.get_or_create(**data, defaults=data)
 
-
-def get_random_first_name():
-    """get a random first name"""
-    name_list = [
-        "Alan",
-        "Amber",
-        "Brandon",
-        "Barbara",
-        "Charlie",
-        "Candice",
-        "Dan",
-        "Diane",
-        "Edward",
-        "Elena",
-        "Grant",
-        "Gale",
-        "Henry",
-        "Heather",
-        "Ian",
-        "Ingrid",
-        "Jack",
-        "Jill",
-        "Kim",
-        "Ken",
-        "Larry",
-        "Lisa",
-        "Mark",
-        "Margret",
-        "Nate",
-        "Nancy",
-        "Peter",
-        "Patricia",
-        "Walter",
-        "Wilma",
-    ]
-    return random.choice(name_list)
-
-
-def get_random_last_name():
-    """get a random last name"""
-    name_list = [
-        "Smith",
-        "Jones",
-        "Kim",
-        "Martin",
-        "Black",
-        "Yee",
-        "House",
-        "Johnson",
-        "Williams",
-        "Brown",
-        "Garcia",
-        "Miller",
-        "Davis",
-    ]
-    return random.choice(name_list)
-
-
 def create_customers(qty=1):
     """add some customer entries to the database"""
-    for i in range(qty):
-        data = dict(first_name=get_random_first_name(), last_name=get_random_last_name())
+    fake = Faker()
+    for _ in range(qty):
+        profile = fake.simple_profile()
+        data = dict(first_name=profile["name"].split()[0], last_name=profile["name"].split()[1], email=profile["mail"])
         Customer.objects.get_or_create(**data, defaults=data)
 
 
@@ -201,14 +170,22 @@ def create_orders(qty=1):
             status=OrderStatus.objects.get_random_row(),
             customer=Customer.objects.get_random_row(),
         )
-        for i in range(random.randint(1, 4)):
-            order.products.add(Product.objects.get_random_row())
+        # randomize order created_at 
+        order.created_at = order.created_at - datetime.timedelta(days=random.randint(0, 365))
+        order.save()
 
+        # add products to order
+        for j in range(random.randint(1, 4)):
+            Invoice.objects.create(order=order, product=Product.objects.get_random_row())
+            # order.products.add(Product.objects.get_random_row())
+    
 
 def generate_test_data():
     """generate some data for testing purposes"""
     create_users_and_groups()
     create_product_attributes()
+    create_manufacturers()
+    create_brands()
     create_products(30)
     create_customers(10)
     create_order_statuses()

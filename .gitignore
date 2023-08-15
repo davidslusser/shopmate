@@ -44,11 +44,15 @@ coverage.xml
 *.mo
 *.pot
 
+# IDE files
+*.idea
+*.iml
+.vscode
+
 # Django stuff:
 *.log
 staticroot
 *.sqlite3
-
 
 # Sphinx documentation
 docs/_build/
@@ -56,8 +60,11 @@ docs/_build/
 # PyBuilder
 target/
 
+# code quaility tools
+.*_cache
+
 # Project Specific
-*.idea
 local_test
-*.iml
 envs/.env.local
+django_project/django_logs
+django_project/yarn.lock

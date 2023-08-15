@@ -1,0 +1,48 @@
+$primary: #446E9B;
+$secondary: #999;
+$success: #3CB521;
+$info: #3399F3;
+$warning: #D47500;
+$danger: #CD0200;
+
+// $primary: #4f6d7a;
+// $secondary: #5c8a8b;
+// $success: #94c7a1;
+// $info: #68b3c8;
+// $warning: #f0ad4e;
+// $danger: #d9534f;
+
+$enable-negative-margins: true;
+$enable-shadows: true;
+
+a {
+    @extend .text-decoration-none;
+  }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+  
+.fs-small {
+  font-size: .5rem !important; 
+}
+
+.dropdown:hover >.dropdown-menu{
+  display: block !important;
+}
+.dropdown-submenu:hover > .dropdown-menu{
+  display: block !important;
+    left: 100%;
+    margin-top: -37px;
+}
+.dropdown-menu li a.active{
+  color:#fff;
+}
+.custom-toggle-arrow{
+      font-size: 18px;
+      margin-top: 5px;
+      line-height: 12px;
+}
+
+
+@import "../../../../staticroot/node_modules/bootstrap/scss/bootstrap";
