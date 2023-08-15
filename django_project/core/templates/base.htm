@@ -62,6 +62,26 @@
             var csrftoken = getCookie('csrftoken');
         </script>
 
+        <style>
+        .dropdown:hover >.dropdown-menu{
+            display: block !important;
+          }
+          .dropdown-submenu:hover > .dropdown-menu{
+            display: block !important;
+              left: 100%;
+              margin-top: -37px;
+          }
+          .dropdown-menu li a.active{
+            color:#fff;
+          }
+          
+          .custom-toggle-arrow{
+                font-size: 18px;
+                margin-top: 5px;
+                line-height: 12px;
+          }
+        </style>
+
         {# project Javascript Functions #}
         {% block project_javascript %}{% endblock project_javascript %}
 
@@ -106,6 +126,7 @@
                             </a>
                         </li>
 
+                        {% include 'pygwalker/bs5/partials/pygwalker_nav_menu.htm' %}
                         {% include 'hostutils/bs5/snippets/hostutils_nav_menu.htm' %}
 
                         <li class="nav-item dropdown align-end ms-2 me-4">

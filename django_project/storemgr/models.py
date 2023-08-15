@@ -67,7 +67,7 @@ class Customer(HandyHelperBaseModel):
     class Meta:
         ordering = ("-created_at",)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.customer_id
 
     def get_absolute_url(self) -> str:
@@ -121,6 +121,28 @@ class Manufacturer(HandyHelperBaseModel):
         for brand in self.brand_set.all():
             brand.product_set.update(enabled=False)
         self.save()
+
+    def get_brands(self):
+        return self.brand_set.all()
+
+    def get_orders(self):
+        return Order.objects.filter(products__brand__manufacturer=self).select_related("status")
+
+    def get_orders_by_product(self):
+        order_qs = self.get_orders().values('products__sku').annotate(qty=models.Count('products__sku'))
+        print('TEST: ', order_qs)
+        return dict(
+            id="orders_by_product",
+            type="bar",
+            label_list=[i['products__sku'] for i in order_qs],
+            value_list=[i['qty'] for i in order_qs],
+            list_view=f"/storemgr/list_orders?products__brand__manufacturer__name={self.name}&products__sku=",
+            color_list=get_colors(order_qs.count()),
+        )
+
+    def get_products(self):
+        return Product.objects.filter(brand__manufacturer=self)
+
 
 
 class Order(HandyHelperBaseModel):

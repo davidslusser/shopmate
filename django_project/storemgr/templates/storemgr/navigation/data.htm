@@ -9,5 +9,26 @@
         <li><a class="dropdown-item" href="{% url 'storemgr:list_manufacturers' %}">Manufacturers</a></li>
         <li><a class="dropdown-item" href="{% url 'storemgr:list_orders' %}">Orders</a></li>
         <li><a class="dropdown-item" href="{% url 'storemgr:list_products' %}">Products</a></li>
+
+        <li class="dropdown-submenu">
+            <a class="dropdown-item" href="#"> Second Level <span
+                class="float-end custom-toggle-arrow">&#187</span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Second Level Item 1</a></li>
+              <li><a class="dropdown-item" href="#">Second Level Item 2</a></li>
+
+              <li class="dropdown-submenu">
+                <a class="dropdown-item" href="#"> Third Level <span
+                    class="float-end custom-toggle-arrow">&#187</span></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Third Level Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Third Level Item 2</a></li>
+                </ul>
+              </li>
+
+
+            </ul>
+        </li>
+
     </ul>
 </li>

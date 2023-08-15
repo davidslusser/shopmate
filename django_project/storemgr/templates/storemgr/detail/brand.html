@@ -27,7 +27,9 @@
                     <div class="container">
                         <div class="row mb-3">
                             <div class="col-5 col-md-12 col-lg-6 col-xl-5 text-primary fw-bold">Manufacturer:</div>
-                            <div class="col-7 col-md-12 col-lg-6 col-xl-7 text-secondary">{{ object.manufacturer }}</div>
+                            <div class="col-7 col-md-12 col-lg-6 col-xl-7 text-secondary">
+                                <a href="{{ object.manufacturer.get_absolute_url }}" class="hvr-grow">{{ object.manufacturer }}</a>
+                            </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-5 col-md-12 col-lg-6 col-xl-5 text-primary fw-bold">Date Created:</div>
@@ -48,7 +50,7 @@
                             <div class="col-7 col-md-12 col-lg-6 col-xl-7 text-secondary">
                                 <a href="{% url 'storemgr:list_orders' %}?products__brand__name={{ object.name }}&page_description={{ object.name }}" class="hvr-grow">{{ object.get_orders.count }}</a>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

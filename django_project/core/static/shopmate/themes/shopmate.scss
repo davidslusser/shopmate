@@ -27,5 +27,22 @@ a {
   font-size: .5rem !important; 
 }
 
+.dropdown:hover >.dropdown-menu{
+  display: block !important;
+}
+.dropdown-submenu:hover > .dropdown-menu{
+  display: block !important;
+    left: 100%;
+    margin-top: -37px;
+}
+.dropdown-menu li a.active{
+  color:#fff;
+}
+.custom-toggle-arrow{
+      font-size: 18px;
+      margin-top: 5px;
+      line-height: 12px;
+}
+
 
 @import "../../../../staticroot/node_modules/bootstrap/scss/bootstrap";

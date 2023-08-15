@@ -21,6 +21,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from core import views
 from django.views.decorators.cache import cache_page
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
@@ -35,6 +36,10 @@ urlpatterns = [
         "hostutils/",
         include("djangoaddicts.hostutils.urls")
     ),
+    path(
+        "pygwalker/",
+        include("djangoaddicts.pygwalker.urls")
+    ),
     # API documentation
     path("rest/schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("api/swagger/", cache_page(120 * 15)(SpectacularSwaggerView.as_view(url_name="schema")), name="swagger"),
@@ -43,9 +48,7 @@ urlpatterns = [
     path("rest/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path("", include("storemgr.urls", namespace="root")),
     path("storemgr/", include("storemgr.urls", namespace="storemgr")),
-
 ]
-
 
 if settings.DEBUG:
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')),)

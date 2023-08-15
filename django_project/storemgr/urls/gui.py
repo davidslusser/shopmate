@@ -1,6 +1,7 @@
 from django.urls import path
 from storemgr.views import gui
 from storemgr.views import report
+from storemgr.views import analysis
 
 urlpatterns = [
     # GUI views
@@ -25,4 +26,11 @@ urlpatterns = [
     path("detail_manufacturer/<int:pk>", gui.DetailManufacturer.as_view(), name="detail_manufacturer"),
     path("detail_order/<str:pk>", gui.DetailOrder.as_view(), name="detail_order"),
     path("detail_product/<str:pk>", gui.DetailProduct.as_view(), name="detail_product"),
+
+    path("analyze_brand/", analysis.AnalyzeBrand.as_view(), name="analyze_brand"),
+    path("analyze_customer/", analysis.AnalyzeCustomer.as_view(), name="analyze_customer"),
+    path("analyze_manufacturer/", analysis.AnalyzeManufacturer.as_view(), name="analyze_manufacturer"),
+    path("analyze_order/", analysis.AnalyzeOrder.as_view(), name="analyze_order"),
+    path("analyze_product/", analysis.AnalyzeProduct.as_view(), name="analyze_product"),
+
 ]
