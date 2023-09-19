@@ -1,9 +1,6 @@
-from django.shortcuts import render
-from django.urls import reverse
 
-from django.views.generic import DetailView, View
-from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
-from handyhelpers.permissions import InAnyGroup
+from django.views.generic import DetailView
+from handyhelpers.views import HandyHelperIndexView
 from djangoaddicts.pygwalker.views import PygWalkerListView, PygWalkerPaginatedListView
 
 # import models

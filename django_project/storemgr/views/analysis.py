@@ -1,12 +1,7 @@
-from djangoaddicts.pygwalker.views import PygWalkerView, StaticCsvPygWalkerView, DynamicCsvPygWalkerView
-from django.views.generic import View
-from django.shortcuts import render
-from django.contrib import messages
-from handyhelpers.mixins.view_mixins import FilterByQueryParamsMixin
+from djangoaddicts.pygwalker.views import PygWalkerView, StaticCsvPygWalkerView
 
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product
-import mimetypes
 
 
 class AnalyzeOrder(PygWalkerView):

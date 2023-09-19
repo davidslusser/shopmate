@@ -19,7 +19,6 @@ from django.urls import path, include
 from django.contrib.auth.views import logout_then_login
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from core import views
-from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [

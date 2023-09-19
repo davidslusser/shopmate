@@ -6,4 +6,4 @@ class StoremgrConfig(AppConfig):
     name = "storemgr"
 
     def ready(self):
-        import storemgr.signals
+        pass

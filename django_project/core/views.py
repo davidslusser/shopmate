@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from handyhelpers.views.htmx import AboutProjectModalView
 
 
 class RegisterUser(generic.CreateView):
