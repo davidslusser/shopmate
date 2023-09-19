@@ -17,6 +17,7 @@ django-environ==0.10.0
 django-extensions==3.2.1
 django-filter==23.1
 django-handyhelpers
+django-hostutils
 django-userextensions
 django-pygwalker
 django-signalcontrol
