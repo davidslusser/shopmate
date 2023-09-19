@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     "django_extensions",
     "handyhelpers",
     "userextensions",
-    "djangoaddicts.codegen",
     "djangoaddicts.hostutils",
     "djangoaddicts.pygwalker",
     "djangoaddicts.signalcontrol",

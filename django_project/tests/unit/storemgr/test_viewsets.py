@@ -244,13 +244,13 @@ class ProductTests(UserSetupMixin, APITestCase):
     def test_product_order_set(self):
         """verify the product-order-set endpoint returns a 200 and the row content is found"""
         # M2M
-        product = baker.make("storemgr.Product")
-        self.row.products.add(product)
+        order = baker.make("storemgr.Order")
+        order.products.add(self.row)
         url = reverse("storemgr:product-order-set", args=[getattr(self.row, "pk")])
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(len(response.json()), 0)
-        self.assertIn(str(product), response.content.decode("utf-8"))
+        self.assertIn(str(order), response.content.decode("utf-8"))
 
 
 class ProductAttributeTests(UserSetupMixin, APITestCase):
@@ -278,10 +278,10 @@ class ProductAttributeTests(UserSetupMixin, APITestCase):
     def test_productattribute_product_set(self):
         """verify the productattribute-product-set endpoint returns a 200 and the row content is found"""
         # M2M
-        productattribute = baker.make("storemgr.ProductAttribute")
-        self.row.attributes.add(productattribute)
+        product = baker.make("storemgr.Product")
+        product.attributes.add(self.row)
         url = reverse("storemgr:productattribute-product-set", args=[getattr(self.row, "pk")])
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(len(response.json()), 0)
-        self.assertIn(str(productattribute), response.content.decode("utf-8"))
+        self.assertIn(str(product), response.content.decode("utf-8"))
