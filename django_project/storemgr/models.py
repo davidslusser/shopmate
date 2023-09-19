@@ -144,7 +144,6 @@ class Manufacturer(HandyHelperBaseModel):
         return Product.objects.filter(brand__manufacturer=self)
 
 
-
 class Order(HandyHelperBaseModel):
     order_id = models.CharField(max_length=16, unique=True, blank=True, primary_key=True)
     status = models.ForeignKey("OrderStatus", on_delete=models.CASCADE)
@@ -185,6 +184,9 @@ class OrderStatus(HandyHelperBaseModel):
     enabled = models.BooleanField(default=True)
 
     def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
         return self.name
 
     def get_absolute_url(self):

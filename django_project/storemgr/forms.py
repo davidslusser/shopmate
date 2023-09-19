@@ -45,3 +45,10 @@ class FilterOrderForm(forms.Form):
         required=False,
         label="Product",
     )
+
+    products__brand = forms.ModelChoiceField(
+        queryset=Brand.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        required=False,
+        label="Brand",
+    )

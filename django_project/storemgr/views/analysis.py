@@ -2,6 +2,7 @@ from djangoaddicts.pygwalker.views import PygWalkerView, StaticCsvPygWalkerView,
 from django.views.generic import View
 from django.shortcuts import render
 from django.contrib import messages
+from handyhelpers.mixins.view_mixins import FilterByQueryParamsMixin
 
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product

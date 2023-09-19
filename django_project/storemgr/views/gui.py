@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.urls import reverse
 
 from django.views.generic import DetailView, View
 from handyhelpers.views import HandyHelperIndexView, HandyHelperListPlusCreateAndFilterView
 from handyhelpers.permissions import InAnyGroup
+from djangoaddicts.pygwalker.views import PygWalkerListView, PygWalkerPaginatedListView
 
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product
@@ -52,28 +54,28 @@ class Index(HandyHelperIndexView):
     protected_group_name = "admin"
 
 
-class ListBrands(HandyHelperListPlusCreateAndFilterView):
+class ListBrands(PygWalkerListView):
     """list available Brand entries"""
     queryset = Brand.objects.all().select_related("manufacturer")
     title = "Brands"
     table = "storemgr/table/brands.htm"
 
 
-class ListCustomers(HandyHelperListPlusCreateAndFilterView):
+class ListCustomers(PygWalkerListView):
     """list available Customer entries"""
     queryset = Customer.objects.all()
     title = "Customers"
     table = "storemgr/table/customers.htm"
 
 
-class ListManufacturers(HandyHelperListPlusCreateAndFilterView):
+class ListManufacturers(PygWalkerListView):
     """list available Manufacturer entries"""
     queryset = Manufacturer.objects.all()
     title = "Manufacturers"
     table = "storemgr/table/manufacturers.htm"
 
 
-class ListOrders(HandyHelperListPlusCreateAndFilterView):
+class ListOrders(PygWalkerPaginatedListView):
     """list available Order entries"""
     queryset = Order.objects.all().select_related("status", "customer").prefetch_related("products")
     title = "Orders"
@@ -85,7 +87,7 @@ class ListOrders(HandyHelperListPlusCreateAndFilterView):
     filter_form_tool_tip = "filter orders"
 
 
-class ListProducts(HandyHelperListPlusCreateAndFilterView):
+class ListProducts(PygWalkerListView):
     """list available Product entries"""
     queryset = Product.objects.all().prefetch_related("attributes")
     title = "Products"
