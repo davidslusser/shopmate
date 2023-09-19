@@ -1,5 +1,5 @@
 [tool.bandit]
-exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts"]
+exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts", "*local_test*"]
 
 
 [tool.black]

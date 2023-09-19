@@ -287,18 +287,6 @@ LOGGING = {
 }
 
 
-CACHES = {
-'default': {
-    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': '/dev/shm',
-    'TIMEOUT': 120,
-    'OPTIONS': {
-        'MAX_ENTRIES': 1000
-    }
-  }
-}
-
-
 PROJECT_NAME = "Shopmate"
 PROJECT_DESCRIPTION = """Shopmate is an ecommerce-like backend service used to showcase django packages published by <a href="https://github.com/djangoaddicts" target="_blank">DjangoAddicts</a> and provide training and examples of Django concepts."""
 PROJECT_VERSION = env.str("PROJECT_VERSION", "0.0.1")
