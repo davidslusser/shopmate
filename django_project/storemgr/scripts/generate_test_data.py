@@ -1,15 +1,14 @@
-import sys
-import os
-import traceback
 import argparse
-import logging
 import datetime
+import logging
+import os
+import random
+import sys
+import traceback
+
 import django
 import environ
-import random
-
 from faker import Faker
-
 
 __version__ = "0.0.1"
 
@@ -24,7 +23,9 @@ django.setup()
 
 # import models
 from django.contrib.auth.models import Group, User
-from storemgr.models import Brand, Customer, Invoice, Manufacturer, Order, OrderStatus, Product, ProductAttribute
+
+from storemgr.models import (Brand, Customer, Invoice, Manufacturer, Order,
+                             OrderStatus, Product, ProductAttribute)
 
 
 def get_opts():
@@ -154,6 +155,7 @@ def create_order_statuses():
     for data in data_list:
         OrderStatus.objects.get_or_create(**data, defaults=data)
 
+
 def create_customers(qty=1):
     """add some customer entries to the database"""
     fake = Faker()
@@ -170,7 +172,7 @@ def create_orders(qty=1):
             status=OrderStatus.objects.get_random_row(),
             customer=Customer.objects.get_random_row(),
         )
-        # randomize order created_at 
+        # randomize order created_at
         order.created_at = order.created_at - datetime.timedelta(days=random.randint(0, 365))
         order.save()
 
@@ -178,7 +180,7 @@ def create_orders(qty=1):
         for j in range(random.randint(1, 4)):
             Invoice.objects.create(order=order, product=Product.objects.get_random_row())
             # order.products.add(Product.objects.get_random_row())
-    
+
 
 def generate_test_data():
     """generate some data for testing purposes"""

@@ -1,6 +1,6 @@
+from auditlog.registry import auditlog
 from django.db import models
 from django.urls import reverse
-from auditlog.registry import auditlog
 from handyhelpers.models import HandyHelperBaseModel
 from handyhelpers.views.report import get_colors
 
@@ -31,28 +31,28 @@ class Brand(HandyHelperBaseModel):
 
     def get_products(self):
         return self.product_set.all()
-    
+
     def get_orders(self):
         return Order.objects.filter(products__brand=self).select_related("status")
 
     def get_orders_by_product(self):
-        order_qs = self.get_orders().values('products__sku').annotate(qty=models.Count('products__sku'))
+        order_qs = self.get_orders().values("products__sku").annotate(qty=models.Count("products__sku"))
         return dict(
             id="orders_by_product",
             type="bar",
-            label_list=[i['products__sku'] for i in order_qs],
-            value_list=[i['qty'] for i in order_qs],
+            label_list=[i["products__sku"] for i in order_qs],
+            value_list=[i["qty"] for i in order_qs],
             list_view=f"/storemgr/list_orders?products__brand__name={self.name}&products__sku=",
             color_list=get_colors(order_qs.count()),
         )
 
     def get_orders_by_status(self):
-        order_qs = self.get_orders().values('status__name').annotate(qty=models.Count('status__name'))
+        order_qs = self.get_orders().values("status__name").annotate(qty=models.Count("status__name"))
         return dict(
             id="orders_by_status",
             type="bar",
-            label_list=[i['status__name'] for i in order_qs],
-            value_list=[i['qty'] for i in order_qs],
+            label_list=[i["status__name"] for i in order_qs],
+            value_list=[i["qty"] for i in order_qs],
             list_view=f"/storemgr/list_orders?products__brand__name={self.name}&status__name=",
             color_list=get_colors(order_qs.count()),
         )
@@ -129,13 +129,13 @@ class Manufacturer(HandyHelperBaseModel):
         return Order.objects.filter(products__brand__manufacturer=self).select_related("status")
 
     def get_orders_by_product(self):
-        order_qs = self.get_orders().values('products__sku').annotate(qty=models.Count('products__sku'))
-        print('TEST: ', order_qs)
+        order_qs = self.get_orders().values("products__sku").annotate(qty=models.Count("products__sku"))
+        print("TEST: ", order_qs)
         return dict(
             id="orders_by_product",
             type="bar",
-            label_list=[i['products__sku'] for i in order_qs],
-            value_list=[i['qty'] for i in order_qs],
+            label_list=[i["products__sku"] for i in order_qs],
+            value_list=[i["qty"] for i in order_qs],
             list_view=f"/storemgr/list_orders?products__brand__manufacturer__name={self.name}&products__sku=",
             color_list=get_colors(order_qs.count()),
         )
@@ -173,7 +173,7 @@ class Order(HandyHelperBaseModel):
 
     def get_invoice(self):
         """get the quantity (qty) of unique products in this order"""
-        return self.products.all().annotate(qty=models.Count('invoice'))
+        return self.products.all().annotate(qty=models.Count("invoice"))
 
     invoice = property(get_invoice)
 

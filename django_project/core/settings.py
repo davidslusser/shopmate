@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
+import sys
 from pathlib import Path
 
-import os
 import environ
-import sys
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -218,70 +217,67 @@ REQUIRED_LOGIN_IGNORE_PATHS = [
 
 
 # logging configuration
-LOG_PATH = env.str('LOG_PATH', os.path.join(BASE_DIR, 'django_logs'))
-DEFAULT_LOG_LEVEL = env.str('DEFAULT_LOG_LEVEL', 'INFO')
+LOG_PATH = env.str("LOG_PATH", os.path.join(BASE_DIR, "django_logs"))
+DEFAULT_LOG_LEVEL = env.str("DEFAULT_LOG_LEVEL", "INFO")
 if not os.path.exists(LOG_PATH):
     os.mkdir(LOG_PATH)
-    print(f'INFO: created log path: {LOG_PATH}')
+    print(f"INFO: created log path: {LOG_PATH}")
 else:
-    print(f'INFO: using log path: {LOG_PATH}')
+    print(f"INFO: using log path: {LOG_PATH}")
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': "%(asctime)s %(levelname)s %(filename)s:%(lineno)s %(message)s",
-            'datefmt': "%Y/%b/%d %H:%M:%S"
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s %(levelname)s %(filename)s:%(lineno)s %(message)s",
+            "datefmt": "%Y/%b/%d %H:%M:%S",
         },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "django": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(str(LOG_PATH), "django.log"),
+            "maxBytes": 1024 * 1024 * 15,
+            "backupCount": 10,
+            "formatter": "verbose",
+        },
+        "user": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(str(LOG_PATH), "user.log"),
+            "maxBytes": 1024 * 1024 * 15,
+            "backupCount": 10,
+            "formatter": "verbose",
+        },
+        "script": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": DEFAULT_LOG_LEVEL,
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "verbose",
         },
     },
-    'handlers': {
-        'django': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(str(LOG_PATH), 'django.log'),
-            'maxBytes': 1024 * 1024 * 15,
-            'backupCount': 10,
-            'formatter': 'verbose',
+    "loggers": {
+        "django": {
+            "handlers": ["django", "console"],
+            "level": "INFO",
         },
-        'user': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(str(LOG_PATH), 'user.log'),
-            'maxBytes': 1024 * 1024 * 15,
-            'backupCount': 10,
-            'formatter': 'verbose',
+        "user": {
+            "handlers": ["user", "console"],
+            "level": "INFO",
         },
-        'script': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'stream': sys.stdout,
-            'formatter': 'verbose',
+        "": {
+            "handlers": ["console"],
+            "level": DEFAULT_LOG_LEVEL,
         },
-        'console': {
-            'level': DEFAULT_LOG_LEVEL,
-            'class': 'logging.StreamHandler',
-            'stream': sys.stdout,
-            'formatter': 'verbose',
-        },
-
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['django', 'console'],
-            'level': 'INFO',
-        },
-        'user': {
-            'handlers': ['user', 'console'],
-            'level': 'INFO',
-        },
-        '': {
-            'handlers': ['console'],
-            'level': DEFAULT_LOG_LEVEL,
-        }
     },
 }
 

@@ -1,16 +1,17 @@
-import django
 import os
 
+import django
 from model_bakery import baker
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 os.environ.setdefault("ENV_PATH", "../envs/.env.test")
 django.setup()
 
+from unittest.mock import patch
+
 from django.shortcuts import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from unittest.mock import patch
+from rest_framework.test import APIClient, APITestCase
 
 
 def create_custom_client(group_name):

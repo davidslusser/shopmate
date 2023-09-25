@@ -1,0 +1,39 @@
+{% extends BASE_TEMPLATE|default:"base.htm" %}
+
+{% block content %}
+    <section class="animated fadeIn" style="animation-delay: .15s;">
+        <header class="m-5">
+            <div class="headline text-center">
+                <div class="container">
+                    <div class="h1 text-primary fw-bold mb-3">{{ title|safe }}</div>
+                </div>
+            </div>
+        </header>
+    </section>
+
+
+    <div class="container text-center">
+    <button 
+	hx-get="/storemgr/get_modal" 
+	hx-target="#modal_wrapper" 
+	hx-trigger="click"
+    data-bs-toggle="modal"
+    data-bs-target="#modal_wrapper"
+	class="btn btn-primary">Open Modal</button>
+
+    <button 
+	hx-get="/storemgr/create_brand" 
+	hx-target="#modal_wrapper" 
+	hx-trigger="click"
+    data-bs-toggle="modal"
+    data-bs-target="#modal_wrapper"
+	class="btn btn-primary">Open Modal</button>
+</div>
+
+{% comment %} <div id="modals-here" class="modal fade" style="display: none" aria-hidden="false" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+    </div>
+</div> {% endcomment %}
+
+
+{% endblock content %}

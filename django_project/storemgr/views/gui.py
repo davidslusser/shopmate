@@ -1,17 +1,17 @@
-
 from django.views.generic import DetailView
-from handyhelpers.views import HandyHelperIndexView
-from djangoaddicts.pygwalker.views import PygWalkerListView, PygWalkerPaginatedListView
-
-# import models
-from storemgr.models import Brand, Customer, Manufacturer, Order, Product
+from djangoaddicts.pygwalker.views import (PygWalkerListView,
+                                           PygWalkerPaginatedListView)
+from handyhelpers.views import HandyHelperActionView, HandyHelperIndexView
 
 # import forms
 from storemgr.forms import FilterOrderForm, FilterProductForm
+# import models
+from storemgr.models import Brand, Customer, Manufacturer, Order, Product
 
 
 class Index(HandyHelperIndexView):
     """render the storemgr index page"""
+
     title = 'Welcome to <span class="text-primary">Shop</span><span class="text-secondary">Mate</span>!'
     subtitle = "Select an option below to get started"
     item_list = [
@@ -39,20 +39,55 @@ class Index(HandyHelperIndexView):
             "url": "/storemgr/admin_panel",
             "icon": "fas fa-id-card-alt",
             "title": "Admin",
-            "description": "Administrator portal",
+            "description": "ShopMate administrator portal",
         },
         {
             "url": "/admin",
             "icon": "fab fa-python",
             "title": "Django Console",
-            "description": "Access the django administrator console",
+            "description": "Access the django administration page",
         },
     ]
     protected_group_name = "admin"
 
 
+class AdminPanel(HandyHelperActionView):
+    """render the storemgr index page"""
+
+    title = '<span class="text-primary">Shop</span><span class="text-secondary">Mate</span> Admin Panel'
+    subtitle = ""
+    item_list = [
+        {
+            "url": "/storemgr/dashboard",
+            "hx_get": "/handyhelpers/about",
+            "icon": """<i class="fa-solid fa-industry"></i>""",
+            "title": "Create Manufacturer",
+            "description": "Create a new manufacturer",
+        },
+        {
+            "hx_get": "/storemgr/create_brand",
+            "icon": """<i class="fa-solid fa-language"></i>""",
+            "title": "Create Brand",
+            "description": "Create a new brand",
+        },
+        {
+            "url": "/storemgr/dashboard",
+            "icon": """<i class="fa-brands fa-product-hunt"></i>""",
+            "title": "Create Product",
+            "description": "Create a new product",
+        },
+        {
+            "url": "/storemgr/dashboard",
+            "icon": """<i class="fa-solid fa-swatchbook"></i>""",
+            "title": "Create Attribute",
+            "description": "Create a new product attribute",
+        },
+    ]
+
+
 class ListBrands(PygWalkerListView):
     """list available Brand entries"""
+
     queryset = Brand.objects.all().select_related("manufacturer")
     title = "Brands"
     table = "storemgr/table/brands.htm"
@@ -60,6 +95,7 @@ class ListBrands(PygWalkerListView):
 
 class ListCustomers(PygWalkerListView):
     """list available Customer entries"""
+
     queryset = Customer.objects.all()
     title = "Customers"
     table = "storemgr/table/customers.htm"
@@ -67,6 +103,7 @@ class ListCustomers(PygWalkerListView):
 
 class ListManufacturers(PygWalkerListView):
     """list available Manufacturer entries"""
+
     queryset = Manufacturer.objects.all()
     title = "Manufacturers"
     table = "storemgr/table/manufacturers.htm"
@@ -74,6 +111,7 @@ class ListManufacturers(PygWalkerListView):
 
 class ListOrders(PygWalkerPaginatedListView):
     """list available Order entries"""
+
     queryset = Order.objects.all().select_related("status", "customer").prefetch_related("products")
     title = "Orders"
     table = "storemgr/table/orders.htm"
@@ -86,6 +124,7 @@ class ListOrders(PygWalkerPaginatedListView):
 
 class ListProducts(PygWalkerListView):
     """list available Product entries"""
+
     queryset = Product.objects.all().prefetch_related("attributes")
     title = "Products"
     table = "storemgr/table/products.htm"
@@ -98,24 +137,24 @@ class ListProducts(PygWalkerListView):
 
 class DetailBrand(DetailView):
     model = Brand
-    template_name = 'storemgr/detail/brand.html'
+    template_name = "storemgr/detail/brand.html"
 
 
 class DetailCustomer(DetailView):
     model = Customer
-    template_name = 'storemgr/detail/customer.html'
+    template_name = "storemgr/detail/customer.html"
 
 
 class DetailManufacturer(DetailView):
     model = Manufacturer
-    template_name = 'storemgr/detail/manufacturer.html'
+    template_name = "storemgr/detail/manufacturer.html"
 
 
 class DetailProduct(DetailView):
     model = Product
-    template_name = 'storemgr/detail/product.html'
+    template_name = "storemgr/detail/product.html"
 
 
 class DetailOrder(DetailView):
     model = Order
-    template_name = 'storemgr/detail/order.html'
+    template_name = "storemgr/detail/order.html"
