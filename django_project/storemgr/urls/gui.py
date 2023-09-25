@@ -1,5 +1,4 @@
 from django.urls import path
-
 from storemgr.views import analysis, gui, htmx, report, test
 
 urlpatterns = [

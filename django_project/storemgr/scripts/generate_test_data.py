@@ -23,9 +23,16 @@ django.setup()
 
 # import models
 from django.contrib.auth.models import Group, User
-
-from storemgr.models import (Brand, Customer, Invoice, Manufacturer, Order,
-                             OrderStatus, Product, ProductAttribute)
+from storemgr.models import (
+    Brand,
+    Customer,
+    Invoice,
+    Manufacturer,
+    Order,
+    OrderStatus,
+    Product,
+    ProductAttribute,
+)
 
 
 def get_opts():

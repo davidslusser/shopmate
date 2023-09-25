@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import View
-from handyhelpers.views.report import (AnnualProgressView, AnnualStatView,
-                                       AnnualTrendView, get_colors)
+from handyhelpers.views.report import (
+    AnnualProgressView,
+    AnnualStatView,
+    AnnualTrendView,
+    get_colors,
+)
 
 # import models
-from storemgr.models import (Brand, Customer, Manufacturer, Order, OrderStatus,
-                             Product)
+from storemgr.models import Brand, Customer, Manufacturer, Order, OrderStatus, Product
 
 
 class StoreMgrAnnualProgressView(AnnualProgressView):

@@ -6,19 +6,37 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 # import filtersets
-from storemgr.filtersets import (BrandFilterSet, CustomerFilterSet,
-                                 InvoiceFilterSet, OrderFilterSet,
-                                 OrderStatusFilterSet,
-                                 ProductAttributeFilterSet, ProductFilterSet)
+from storemgr.filtersets import (
+    BrandFilterSet,
+    CustomerFilterSet,
+    InvoiceFilterSet,
+    OrderFilterSet,
+    OrderStatusFilterSet,
+    ProductAttributeFilterSet,
+    ProductFilterSet,
+)
+
 # import models
-from storemgr.models import (Brand, Customer, Invoice, Order, OrderStatus,
-                             Product, ProductAttribute)
+from storemgr.models import (
+    Brand,
+    Customer,
+    Invoice,
+    Order,
+    OrderStatus,
+    Product,
+    ProductAttribute,
+)
+
 # import serializers
-from storemgr.serializers import (BrandSerializer, CustomerSerializer,
-                                  InvoiceSerializer, OrderSerializer,
-                                  OrderStatusSerializer,
-                                  ProductAttributeSerializer,
-                                  ProductSerializer)
+from storemgr.serializers import (
+    BrandSerializer,
+    CustomerSerializer,
+    InvoiceSerializer,
+    OrderSerializer,
+    OrderStatusSerializer,
+    ProductAttributeSerializer,
+    ProductSerializer,
+)
 
 
 class BrandViewSet(viewsets.ModelViewSet):

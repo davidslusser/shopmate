@@ -1,10 +1,10 @@
 from django.views.generic import DetailView
-from djangoaddicts.pygwalker.views import (PygWalkerListView,
-                                           PygWalkerPaginatedListView)
+from djangoaddicts.pygwalker.views import PygWalkerListView, PygWalkerPaginatedListView
 from handyhelpers.views import HandyHelperActionView, HandyHelperIndexView
 
 # import forms
 from storemgr.forms import FilterOrderForm, FilterProductForm
+
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product
 
