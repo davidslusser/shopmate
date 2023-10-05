@@ -3,7 +3,13 @@ from djangoaddicts.pygwalker.views import PygWalkerListView, PygWalkerPaginatedL
 from handyhelpers.views import HandyHelperActionView, HandyHelperIndexView
 
 # import forms
-from storemgr.forms import FilterOrderForm, FilterProductForm
+from storemgr.forms import (
+    FilterBrandForm,
+    FilterCustomerForm,
+    FilterManufacturerForm,
+    FilterOrderForm,
+    FilterProductForm,
+)
 
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product
@@ -58,8 +64,8 @@ class AdminPanel(HandyHelperActionView):
     subtitle = ""
     item_list = [
         {
-            "url": "/storemgr/dashboard",
-            "hx_get": "/handyhelpers/about",
+            # "url": "/storemgr/create_manufacturer",
+            "hx_get": "/storemgr/create_manufacturer",
             "icon": """<i class="fa-solid fa-industry"></i>""",
             "title": "Create Manufacturer",
             "description": "Create a new manufacturer",
@@ -71,13 +77,13 @@ class AdminPanel(HandyHelperActionView):
             "description": "Create a new brand",
         },
         {
-            "url": "/storemgr/dashboard",
+            "hx_get": "/storemgr/create_product",
             "icon": """<i class="fa-brands fa-product-hunt"></i>""",
             "title": "Create Product",
             "description": "Create a new product",
         },
         {
-            "url": "/storemgr/dashboard",
+            "hx_get": "/storemgr/create_product_attribute",
             "icon": """<i class="fa-solid fa-swatchbook"></i>""",
             "title": "Create Attribute",
             "description": "Create a new product attribute",
@@ -91,6 +97,12 @@ class ListBrands(PygWalkerListView):
     queryset = Brand.objects.all().select_related("manufacturer")
     title = "Brands"
     table = "storemgr/table/brands.htm"
+    pygwalker_url = "/storemgr/analyze_brands/"
+
+    filter_form_obj = FilterBrandForm
+    filter_form_title = "<b>Filter Brands: </b>"
+    filter_form_modal = "filter_brands"
+    filter_form_tool_tip = "filter brands"
 
 
 class ListCustomers(PygWalkerListView):
@@ -99,6 +111,12 @@ class ListCustomers(PygWalkerListView):
     queryset = Customer.objects.all()
     title = "Customers"
     table = "storemgr/table/customers.htm"
+    pygwalker_url = "/storemgr/analyze_customers/"
+
+    filter_form_obj = FilterCustomerForm
+    filter_form_title = "<b>Filter Customers: </b>"
+    filter_form_modal = "filter_customers"
+    filter_form_tool_tip = "filter customers"
 
 
 class ListManufacturers(PygWalkerListView):
@@ -107,6 +125,12 @@ class ListManufacturers(PygWalkerListView):
     queryset = Manufacturer.objects.all()
     title = "Manufacturers"
     table = "storemgr/table/manufacturers.htm"
+    pygwalker_url = "/storemgr/analyze_manufacturers/"
+
+    filter_form_obj = FilterManufacturerForm
+    filter_form_title = "<b>Filter Manufacturers: </b>"
+    filter_form_modal = "filter_manufacturers"
+    filter_form_tool_tip = "filter manufacturers"
 
 
 class ListOrders(PygWalkerPaginatedListView):
@@ -115,6 +139,7 @@ class ListOrders(PygWalkerPaginatedListView):
     queryset = Order.objects.all().select_related("status", "customer").prefetch_related("products")
     title = "Orders"
     table = "storemgr/table/orders.htm"
+    pygwalker_url = "/storemgr/analyze_orders/"
 
     filter_form_obj = FilterOrderForm
     filter_form_title = "<b>Filter Orders: </b>"
@@ -128,6 +153,7 @@ class ListProducts(PygWalkerListView):
     queryset = Product.objects.all().prefetch_related("attributes")
     title = "Products"
     table = "storemgr/table/products.htm"
+    pygwalker_url = "/storemgr/analyze_products/"
 
     filter_form_obj = FilterProductForm
     filter_form_title = "<b>Filter Products: </b>"

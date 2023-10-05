@@ -1,45 +1,44 @@
-from djangoaddicts.pygwalker.views import PygWalkerView, StaticCsvPygWalkerView
+from djangoaddicts.pygwalker.views import PygWalkerView
 
 # import models
 from storemgr.models import Brand, Customer, Manufacturer, Order, Product
 
 
-class AnalyzeOrder(PygWalkerView):
+class AnalyzeOrders(PygWalkerView):
     queryset = Order.objects.all()
-    title = "Order Data Analysis"
-    theme = "light"
-    field_list = ["status__name", "customer", "order_id", "created_at", "updated_at", "products"]
+    field_list = [
+        "order_id",
+        "status__name",
+        "customer",
+        "created_at",
+        "updated_at",
+        "products",
+        "products__brand__name",
+    ]
 
 
-class AnalyzeBrand(PygWalkerView):
-    field_list = ["name", "enabled", "manufacturer__name", "product"]
+class AnalyzeBrands(PygWalkerView):
+    field_list = ["name", "enabled", "manufacturer__name", "product", "product__order"]
     queryset = Brand.objects.all()
-    title = "Brand Data Analysis"
-    theme = "light"
 
 
-class AnalyzeCustomer(PygWalkerView):
-    field_list = ["customer_id", "order__created_at", "order__products"]
+class AnalyzeCustomers(PygWalkerView):
+    field_list = [
+        "customer_id",
+        "order__created_at",
+        "order__products",
+        "order__products__brand__name",
+        "created_at",
+        "updated_at",
+    ]
     queryset = Customer.objects.all()
-    title = "Customer Data Analysis"
-    theme = "light"
 
 
-class AnalyzeManufacturer(PygWalkerView):
-    field_list = ["name", "enabled", "created_at", "updated_at"]
+class AnalyzeManufacturers(PygWalkerView):
+    field_list = ["name", "enabled", "brand__product__order", "created_at", "updated_at"]
     queryset = Manufacturer.objects.all()
-    title = "Manufacturer Data Analysis"
-    theme = "light"
 
 
-class AnalyzeProduct(PygWalkerView):
-    field_list = ["sku", "brand", "brand__manufacturer__name", "enabled", "created_at", "updated_at"]
+class AnalyzeProducts(PygWalkerView):
+    field_list = ["sku", "brand__name", "brand__manufacturer__name", "order", "enabled", "created_at", "updated_at"]
     queryset = Product.objects.all()
-    title = "Product Data Analysis"
-    theme = "light"
-
-
-class StaticTestView(StaticCsvPygWalkerView):
-    csv_file = "storemgr/views/data.csv"
-    theme = "light"
-    title = "Salary Data"

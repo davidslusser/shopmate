@@ -5,7 +5,7 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li class="dropdown-submenu">
-            <a class="dropdown-item" href="#">Brands<span class="text-secondary float-end">&#187</span></a>
+            <a class="dropdown-item" href="{% url 'storemgr:list_brands' %}">Brands<span class="text-secondary float-end">&#187</span></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'storemgr:list_brands' %}">List</a></li>
                 <li><a class="dropdown-item" href="/pygwalker/generic_pyg/storemgr/brand">Analyze</a></li>
@@ -14,7 +14,7 @@
         </li>
 
         <li class="dropdown-submenu">
-            <a class="dropdown-item" href="#">Customers<span class="text-secondary float-end">&#187</span></a>
+            <a class="dropdown-item" href="{% url 'storemgr:list_customers' %}">Customers<span class="text-secondary float-end">&#187</span></a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'storemgr:list_customers' %}">List</a></li>
               <li><a class="dropdown-item" href="/pygwalker/generic_pyg/storemgr/customer">Analyze</a></li>
@@ -23,7 +23,7 @@
         </li>
 
         <li class="dropdown-submenu">
-            <a class="dropdown-item" href="#">Manufacturers<span class="text-secondary float-end">&#187</span></a>
+            <a class="dropdown-item" href="{% url 'storemgr:list_manufacturers' %}">Manufacturers<span class="text-secondary float-end">&#187</span></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'storemgr:list_manufacturers' %}">List</a></li>
                 <li><a class="dropdown-item" href="/pygwalker/generic_pyg/storemgr/manufacturer">Analyze</a></li>
@@ -32,7 +32,7 @@
         </li>
 
         <li class="dropdown-submenu">
-            <a class="dropdown-item" href="#">Orders<span class="text-secondary float-end">&#187</span></a>
+            <a class="dropdown-item" href="{% url 'storemgr:list_orders' %}">Orders<span class="text-secondary float-end">&#187</span></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'storemgr:list_orders' %}">List</a></li>
                 <li><a class="dropdown-item" href="/pygwalker/generic_pyg/storemgr/order">Analyze</a></li>
@@ -41,7 +41,7 @@
           </li>
 
         <li class="dropdown-submenu">
-            <a class="dropdown-item" href="#">Products<span class="text-secondary float-end">&#187</span></a>
+            <a class="dropdown-item" href="{% url 'storemgr:list_products' %}">Products<span class="text-secondary float-end">&#187</span></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'storemgr:list_products' %}">List</a></li>
                 <li><a class="dropdown-item" href="/pygwalker/generic_pyg/storemgr/product">Analyze</a></li>

@@ -227,7 +227,7 @@ class ProductAttribute(HandyHelperBaseModel):
     value = models.CharField(max_length=32, blank=True, null=True)
 
     def __str__(self) -> str:
-        return self.key
+        return self.value
 
     def get_absolute_url(self):
         return reverse("storemgr:productattribute", kwargs={"pk": self.pk})
