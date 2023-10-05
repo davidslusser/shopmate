@@ -2,8 +2,11 @@ on: [push]
 
 jobs:
   black:
-    uses: davidslusser/actions/.github/workflows/black.yaml@main
-    with:
-      src: "django_project"
-      options: ""
-      pip_install_command: "pip install -r requirements.txt"
+    runs-on: ubuntu-latest
+    name: "black"
+    steps:
+      - uses: davidslusser/actions_python_black@v1.0.0
+        with:
+          src: "django_project"
+          options: ""
+          pip_install_command: "pip install .[dev]"

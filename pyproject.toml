@@ -1,3 +1,52 @@
+[project]
+dependencies = [
+    "django",
+    "django-auditlog==2.2.0",
+    "django-braces",
+    "django-debug-toolbar",
+    "django-environ",
+    "django-extensions",
+    "django-filter",
+    "django-handyhelpers",
+    "django-hostutils",
+    "django-userextensions",
+    "django-pygwalker",
+    "django-signalcontrol",
+    "djangorestframework",
+    "djangorestframework-filters==1.0.0.dev0",
+    "drf-flex-fields",
+    "drf-spectacular",
+    "drf-renderer-xlsx",
+]
+description = "Shopmate is an ecommerce-like backend service used to showcase django"
+dynamic = ["version"]
+keywords = ["django"]
+license = {file = "LICENSE"}
+name = "shopmate"
+readme = "README.md"
+requires-python = ">=3.8"
+
+
+[project.optional-dependencies]
+dev = [
+    "bandit",
+    "black",
+    "coveralls",
+    "isort",
+    "model-bakery",
+    "mypy",
+    "mypy-extensions",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "radon",
+    "safety",
+    "types-python-dateutil",
+    "typing_extensions",
+]
+
+
 [tool.bandit]
 exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts", "*local_test*"]
 
