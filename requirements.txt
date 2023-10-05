@@ -21,6 +21,7 @@ django-hostutils
 django-userextensions
 django-pygwalker
 django-signalcontrol
+drf-spectacular
 djangorestframework==3.13.1
 djangorestframework-filters==1.0.0.dev0
 docutils==0.19
