@@ -230,7 +230,7 @@ class ProductTests(UserSetupMixin, APITestCase):
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(len(response.json()), 0)
-        self.assertIn(str(productattribute), response.content.decode("utf-8"))
+        self.assertIn(productattribute.key, response.content.decode("utf-8"))
 
     def test_product_invoice_set(self):
         """verify the product-invoice-set endpoint returns a 200 and the row content is found"""

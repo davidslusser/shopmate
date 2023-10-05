@@ -12,23 +12,16 @@ show_missing = true
 
 [tool.coverage.run]
 branch = true
-source = ["django_project"]
 omit = [
-    "django_project/storemgr/local_test/*",
     "django_project/manage.py", 
     "django_project/core/asgi.py",
     "django_project/core/wsgi.py", 
+    "django_project/*/local_test/*",
+    "django_project/*/migrations/*",
     "django_project/*/scripts/*",
-    "django_project/tests/*", 
     ]
-
-
-[tool.flake8]
-ignore = "E203,E266,H106,H904,E133"
-max-line-length = 120
-max-complexity = 25
-hang-closing = true
-exclude = "django_project/storemgr/local_test,  django_project/manage.py, django_project/*/scripts"
+relative_files = true
+source = ["django_project"]
 
 
 [tool.isort]
@@ -40,26 +33,15 @@ exclude = ["venv/*", "local_test/*", "migrations/*"]
 ignore_missing_imports = true
 
 
-[tool.pylint.format]
-max-line-length = "120"
-
-[tool.pylint.MASTER]
-ignore-paths = ["django_project/manage.py", "django_project/tests", "django_project/storemgr/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-exit-zero = true
-
-[tool.pylint.'MESSAGES CONTROL']
-disable = "R0903,R0913,R0901,W0613,W0718,C0114,C0115,C0103,R1725"
-
-
 [tool.pytest.ini_options]
-addopts = "-s -v -x --strict-markers -m 'not extra' --cov=django_project"
-testpaths = ["django_project"]
+addopts = "-s -v -x --strict-markers -m 'not extra'"
+testpaths = ["django_project/tests"]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",
 ]
 
+
 [tool.ruff]
 line-length = 120
 exclude = ["django_project/manage.py", "django_project/tests", "django_project/storemgr/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-
