@@ -2,8 +2,11 @@ on: [push]
 
 jobs:
   bandit:
-    uses: davidslusser/actions/.github/workflows/bandit.yaml@main
-    with:
-      src: "django_project"
-      options: "-c pyproject.toml -r"
-      pip_install_command: "pip install -r requirements.txt"
+    runs-on: ubuntu-latest
+    name: "bandit"
+    steps:
+      - uses: davidslusser/actions_python_bandit@v1.0.0
+        with:
+          src: "django_project"
+          options: "-c pyproject.toml -r"
+          pip_install_command: "pip install .[dev]"

@@ -1,0 +1,40 @@
+  <div class="modal-dialog modal-dialog-scrollable {{ modal_size }} ">
+      {% if form %}
+      {{ csrf_token }}
+      <form hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}'
+            class="modal-content">
+      {% else %}
+      <div class="modal-content">
+      {% endif %}
+          <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="generic_modal_label">{% if modal_title %}{{ modal_title|safe }}{% endif %}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          {% if form %}
+              {% if form_template %}
+                  {% include form_template %}
+              {% else %}
+                  {{ form.as_p }}
+              {% endif %}
+          {% else %}
+              {% if modal_body %}{{ modal_body|safe }}{% endif %}
+          {% endif %}                
+          </div>
+          <div class="modal-footer">
+            {{ show_messages }}
+            {% if show_messages %} sho messsssages! {% endif %}
+              {% if modal_button_close %}
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ modal_button_close }}</button>
+              {% endif %}
+              {% if modal_button_submit %}
+              <button hx-post="{% if hx_post %}{{ hx_post }}{% else %}{{ request.path }}{% endif %}" {% if show_messages %}hx-target="#message-container" hx-swap="afterend"{% endif %}
+              type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ modal_button_submit }}</button>
+              {% endif %}
+          </div>
+      {% if form %}
+      </form>
+      {% else %}
+      </div>
+      {% endif %}
+  </div>

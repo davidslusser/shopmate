@@ -1,5 +1,56 @@
+[project]
+dependencies = [
+    "django",
+    "django-auditlog==2.2.0",
+    "django-braces",
+    "django-debug-toolbar",
+    "django-environ",
+    "django-extensions",
+    "django-filter",
+    "django-handyhelpers",
+    "django-hostutils",
+    "django-userextensions",
+    "django-pygwalker",
+    "django-signalcontrol",
+    "djangorestframework",
+    "djangorestframework-filters==1.0.0.dev0",
+    "drf-flex-fields",
+    "drf-spectacular",
+    "drf-renderer-xlsx",
+]
+description = "Shopmate is an ecommerce-like backend service used to showcase django"
+dynamic = ["version"]
+keywords = ["django"]
+license = {file = "LICENSE"}
+name = "shopmate"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[tool.setuptools]
+py-modules = []
+
+[project.optional-dependencies]
+dev = [
+    "bandit",
+    "black",
+    "coveralls",
+    "isort",
+    "model-bakery",
+    "mypy",
+    "mypy-extensions",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "radon",
+    "safety",
+    "types-python-dateutil",
+    "typing_extensions",
+]
+
+
 [tool.bandit]
-exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts"]
+exclude_dirs = ["venv", "django_project/tests", "django_project/storemgr/scripts", "*local_test*"]
 
 
 [tool.black]
@@ -12,45 +63,36 @@ show_missing = true
 
 [tool.coverage.run]
 branch = true
-source = ["django_project"]
 omit = [
-    "django_project/storemgr/local_test/*",
     "django_project/manage.py", 
     "django_project/core/asgi.py",
     "django_project/core/wsgi.py", 
+    "django_project/*/local_test/*",
+    "django_project/*/migrations/*",
     "django_project/*/scripts/*",
-    "django_project/tests/*", 
     ]
+relative_files = true
+source = ["django_project"]
 
 
-[tool.flake8]
-ignore = "E203,E266,H106,H904,E133"
-max-line-length = 120
-max-complexity = 25
-hang-closing = true
-exclude = "django_project/storemgr/local_test,  django_project/manage.py, django_project/*/scripts"
+[tool.isort]
+profile = "black"
 
 
-[tool.pylint.format]
-max-line-length = "120"
-
-[tool.pylint.MASTER]
-ignore-paths = ["django_project/manage.py", "django_project/tests", "django_project/storemgr/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-exit-zero = true
-
-[tool.pylint.'MESSAGES CONTROL']
-disable = "R0903,R0913,R0901,W0613,W0718,C0114,C0115,C0103,R1725"
+[tool.mypy]
+exclude = ["venv/*", "local_test/*", "migrations/*"]
+ignore_missing_imports = true
 
 
 [tool.pytest.ini_options]
-addopts = "-s -v -x --strict-markers -m 'not extra' --cov=django_project"
-testpaths = ["django_project"]
+addopts = "-s -v -x --strict-markers -m 'not extra'"
+testpaths = ["django_project/tests"]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",
 ]
 
+
 [tool.ruff]
 line-length = 120
 exclude = ["django_project/manage.py", "django_project/tests", "django_project/storemgr/migrations", "django_project/*/scripts", "django_project/*/local_test"]
-

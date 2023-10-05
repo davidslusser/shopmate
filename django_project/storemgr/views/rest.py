@@ -1,24 +1,9 @@
 """ DRF viewsets for applicable app models """
 
-from rest_framework import viewsets, status
+from rest_flex_fields import is_expanded
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_flex_fields import is_expanded
-from handyhelpers.drf_permissions import InAnyGroup
-
-# import models
-from storemgr.models import Brand, Customer, Invoice, Order, OrderStatus, Product, ProductAttribute
-
-# import serializers
-from storemgr.serializers import (
-    BrandSerializer,
-    CustomerSerializer,
-    InvoiceSerializer,
-    OrderSerializer,
-    OrderStatusSerializer,
-    ProductSerializer,
-    ProductAttributeSerializer,
-)
 
 # import filtersets
 from storemgr.filtersets import (
@@ -27,13 +12,35 @@ from storemgr.filtersets import (
     InvoiceFilterSet,
     OrderFilterSet,
     OrderStatusFilterSet,
-    ProductFilterSet,
     ProductAttributeFilterSet,
+    ProductFilterSet,
+)
+
+# import models
+from storemgr.models import (
+    Brand,
+    Customer,
+    Invoice,
+    Order,
+    OrderStatus,
+    Product,
+    ProductAttribute,
+)
+
+# import serializers
+from storemgr.serializers import (
+    BrandSerializer,
+    CustomerSerializer,
+    InvoiceSerializer,
+    OrderSerializer,
+    OrderStatusSerializer,
+    ProductAttributeSerializer,
+    ProductSerializer,
 )
 
 
 class BrandViewSet(viewsets.ModelViewSet):
-# class BrandViewSet(viewsets.ModelViewSet, InAnyGroup):
+    # class BrandViewSet(viewsets.ModelViewSet, InAnyGroup):
     """API endpoint that allows Brands to be viewed"""
     # permission_classes = (InAnyGroup,)
     # permission_dict = {'GET': ['blah'],

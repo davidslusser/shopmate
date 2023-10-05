@@ -1,11 +1,18 @@
 """ DRF serailizers for applicable app models """
 
-from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-
+from rest_framework import serializers
 
 # import models
-from storemgr.models import Brand, Customer, Invoice, Order, OrderStatus, Product, ProductAttribute
+from storemgr.models import (
+    Brand,
+    Customer,
+    Invoice,
+    Order,
+    OrderStatus,
+    Product,
+    ProductAttribute,
+)
 
 
 class BrandSerializer(FlexFieldsModelSerializer):
