@@ -101,7 +101,6 @@ dill==0.3.6
 Django==4.2.1
 django-auditlog==2.2.0
 django-braces==1.15.0
-django-codegen @ file:///home/david/projects/django-codegen/dist/django-codegen-0.0.2.dev3%2Bg0fb829d.d20230508.tar.gz
 django-debug-toolbar==4.1.0
 django-environ==0.10.0
 django-extensions==3.2.1
